@@ -47,7 +47,7 @@ export default function Navigation() {
                                 />
                             </div>
                             <span className='text-xl font-semibold text-navy-900'>
-                                Storm to Shore
+                                PREVIEW ONLY
                             </span>
                         </div>
                     </Link>

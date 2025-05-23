@@ -119,13 +119,12 @@ export default function HomePage() {
             {/* Scripture Section */}
             <section className='py-20 px-4 bg-navy-50'>
                 <div className='max-w-4xl mx-auto text-center'>
-                    <blockquote className='text-2xl md:text-3xl font-medium text-navy-700 mb-6 leading-relaxed'>
-                        "He stilled the storm to a whisper; the waves of the sea
-                        were hushed. They were glad when it grew calm, and he
-                        guided them to their desired haven."
+                    <blockquote className='font-bible text-2xl md:text-3xl font-medium text-navy-700 mb-6 leading-relaxed'>
+                        "He maketh the storm a calm, so that the waves thereof
+                        are still. Then are they glad because they be quiet;"
                     </blockquote>
                     <cite className='text-xl text-ocean-600 font-semibold'>
-                        — Psalm 107:29-30
+                        — Psalm 107:29-30 (KJV)
                     </cite>
                 </div>
             </section>

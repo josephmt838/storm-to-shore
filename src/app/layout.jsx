@@ -1,11 +1,22 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Merriweather, Playfair } from 'next/font/google';
 import { useState } from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { Toaster } from '../components/ui/toaster';
 import './globals.css';
+
+const merriweather = Merriweather({
+    subsets: ['latin'],
+    weight: ['300', '400', '700', '900'],
+});
+
+const fairplay = Playfair({
+    subsets: ['latin'],
+    variable: '--font-bible',
+});
 
 export default function RootLayout({ children }) {
     const [queryClient] = useState(
@@ -21,7 +32,10 @@ export default function RootLayout({ children }) {
     );
 
     return (
-        <html lang='en'>
+        <html
+            lang='en'
+            className={`${merriweather.className} ${fairplay.variable}`}
+        >
             <head>
                 <title>Storm to Shore</title>
                 <meta

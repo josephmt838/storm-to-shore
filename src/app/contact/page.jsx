@@ -225,8 +225,8 @@ export default function Contact() {
                                             requests
                                         </p>
                                         <p className='text-ocean-600 font-medium'>
-                                            <Link href='mailto:hello@stormtoshore.org'>
-                                                hello@stormtoshore.org
+                                            <Link href='mailto:storm-to-shore@josephmt.com'>
+                                                storm-to-shore@josephmt.com
                                             </Link>
                                         </p>
                                     </div>
@@ -241,10 +241,13 @@ export default function Contact() {
                         <h3 className='text-2xl font-bold text-navy-700 mb-4'>
                             We're Here for You
                         </h3>
-                        <p className='text-navy-600 text-lg'>
-                            "Cast all your anxiety on him because he cares for
-                            you." - 1 Peter 5:7
-                        </p>
+                        <blockquote className='font-bible text-2xl font-medium text-center text-navy-700 my-8 p-6 bg-ocean-50 border-l-4 border-ocean-500 rounded-r-lg'>
+                            “Call unto me, and I will answer thee, and shew thee
+                            great and mighty things, which thou knowest not.”
+                            <cite className='block text-lg text-ocean-600 mt-4'>
+                                — Jeremiah 33:3 (KJV)
+                            </cite>
+                        </blockquote>
                     </div>
                 </Card>
             </div>

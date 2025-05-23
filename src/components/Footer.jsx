@@ -4,7 +4,7 @@ import {
     FaEnvelope,
     FaFacebook,
     FaInstagram,
-    FaPhone,
+    FaPrayingHands,
     FaYoutube,
 } from 'react-icons/fa';
 
@@ -12,7 +12,7 @@ export default function Footer() {
     return (
         <footer className='bg-navy-900 text-white'>
             <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
-                <div className='grid md:grid-cols-4 gap-8 text-white'>
+                <div className='grid md:grid-cols-3 gap-8 text-white'>
                     {/* Logo and Mission */}
                     <div className='md:col-span-2'>
                         <div className='flex items-center space-x-3 mb-4'>
@@ -31,24 +31,27 @@ export default function Footer() {
                             life's storms and find peace in God's presence.
                         </p>
                         <div className='flex space-x-4'>
-                            <a
-                                href='#'
+                            <Link
+                                href='https://www.facebook.com/profile.php?id=61576837583145'
+                                target='_blank'
                                 className='text-white hover:text-ocean-400 transition-colors'
                             >
                                 <FaFacebook size={20} />
-                            </a>
-                            <a
-                                href='#'
+                            </Link>
+                            <Link
+                                href='https://www.youtube.com/@StormToShoreDiscipleship'
+                                target='_blank'
                                 className='text-white hover:text-ocean-400 transition-colors'
                             >
                                 <FaYoutube size={20} />
-                            </a>
-                            <a
-                                href='#'
+                            </Link>
+                            <Link
+                                href='https://www.instagram.com/stormtoshore/'
+                                target='_blank'
                                 className='text-white hover:text-ocean-400 transition-colors'
                             >
                                 <FaInstagram size={20} />
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -102,7 +105,7 @@ export default function Footer() {
                     </div>
 
                     {/* Contact Info */}
-                    <div className='min-w-[250px]'>
+                    <div>
                         <h3 className='text-lg font-semibold mb-4'>
                             Get in Touch
                         </h3>
@@ -113,19 +116,8 @@ export default function Footer() {
                                     size={16}
                                 />
                                 <span>
-                                    <Link href='mailto:hello@stormtoshore.org'>
-                                        hello@stormtoshore.org
-                                    </Link>
-                                </span>
-                            </div>
-                            <div className='flex items-center space-x-3'>
-                                <FaPhone
-                                    className='text-ocean-400'
-                                    size={16}
-                                />
-                                <span>
-                                    <Link href={'tel:5551234567'}>
-                                        (555) 123-4567
+                                    <Link href='mailto:storm-to-shore@josephmt.com'>
+                                        storm-to-shore@josephmt.com
                                     </Link>
                                 </span>
                             </div>
@@ -135,9 +127,19 @@ export default function Footer() {
 
                 <div className='border-t border-navy-800 mt-8 pt-8 text-center'>
                     <p className='text-navy-400'>
-                        &copy; 2024 Storm to Shore Ministry. All rights
+                        &copy; 2025 Storm to Shore Discipleship. All rights
                         reserved.
                     </p>
+                    <div className='text-navy-400 flex justify-center items-center gap-2'>
+                        <p>Created with</p>
+                        <FaPrayingHands className='' />
+                        <Link
+                            href='https://www.josephmt.com'
+                            className='hover:cursor-pointer hover:text-ocean-500'
+                        >
+                            JosephMT.com
+                        </Link>
+                    </div>
                 </div>
             </div>
         </footer>

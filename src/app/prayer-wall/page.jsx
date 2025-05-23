@@ -113,14 +113,16 @@ export default function PrayerWall() {
                         <h3 className='text-2xl font-bold text-navy-700 mb-4'>
                             Praying Together
                         </h3>
-                        <p className='text-navy-600 mb-4'>
-                            "Again, truly I tell you that if two of you on earth
-                            agree about anything they ask for, it will be done
-                            for them by my Father in heaven. For where two or
-                            three gather in my name, there am I with them."
+                        <p className='font-bible text-navy-600 mb-4'>
+                            "Again I say unto you, That if two of you shall
+                            agree on earth as touching any thing that they shall
+                            ask, it shall be done for them of my Father which is
+                            in heaven. For where two or three are gathered
+                            together in my name, there am I in the midst of
+                            them."
                         </p>
-                        <cite className='text-ocean-600 font-semibold'>
-                            — Matthew 18:19-20
+                        <cite className='font-bible text-ocean-600 font-semibold'>
+                            — Matthew 18:19-20 (KJV)
                         </cite>
                     </div>
                 </div>

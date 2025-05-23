@@ -135,12 +135,13 @@ export default function About() {
                             Jesus - our eternal shore and safe harbor.
                         </p>
 
-                        <blockquote className='text-2xl font-medium text-center text-navy-700 my-8 p-6 bg-ocean-50 border-l-4 border-ocean-500 rounded-r-lg'>
-                            "He stilled the storm to a whisper; the waves of the
-                            sea were hushed. They were glad when it grew calm,
-                            and he guided them to their desired haven."
+                        <blockquote className='font-bible text-2xl font-medium text-center text-navy-700 my-8 p-6 bg-ocean-50 border-l-4 border-ocean-500 rounded-r-lg'>
+                            "For thou hast been a strength to the poor, a
+                            strength to the needy in his distress, a refuge from
+                            the storm, a shadow from the heat, when the blast of
+                            the terrible ones is as a storm against the wall."
                             <cite className='block text-lg text-ocean-600 mt-4'>
-                                — Psalm 107:29-30
+                                — Isaiah 25:4 (KJV)
                             </cite>
                         </blockquote>
 

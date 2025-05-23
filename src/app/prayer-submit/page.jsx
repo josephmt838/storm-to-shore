@@ -274,11 +274,14 @@ export default function PrayerSubmit() {
                 </Card>
 
                 <div className='mt-8 text-center'>
-                    <p className='text-navy-600'>
-                        "Do not be anxious about anything, but in every
-                        situation, by prayer and petition, with thanksgiving,
-                        present your requests to God." - Philippians 4:6
+                    <p className='text-navy-600 font-bold italic'>
+                        "Be careful for nothing; but in every thing by prayer
+                        and supplication with thanksgiving let your requests be
+                        made known unto God. And the peace of God, which passeth
+                        all understanding, shall keep your hearts and minds
+                        through Christ Jesus."
                     </p>
+                    <p className='text-navy-600 italic'>- Philippians 4:6-7</p>
                 </div>
             </div>
         </div>
