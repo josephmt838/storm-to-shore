@@ -121,7 +121,7 @@ export const addContactMessage = (newMessage) => {
     return message;
 };
 
-export const updatePrayerprayerStatus = (id, prayerStatus) => {
+export const updatePrayerStatus = (id, prayerStatus) => {
     const prayer = mockPrayerRequests.find((p) => p.id === id);
     if (prayer) {
         prayer.prayerStatus = prayerStatus;
