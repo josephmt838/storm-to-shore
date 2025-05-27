@@ -75,7 +75,7 @@ export const mockContactMessages = [
         name: 'Robert Johnson',
         email: 'robert.johnson@email.com',
         message:
-            "I'm interested in volunteering with your ministry. I have experience in youth outreach and would love to help with community events. Please let me know how I can get involved.",
+            "I'm interested in volunteering with your discipleship. I have experience in youth outreach and would love to help with community events. Please let me know how I can get involved.",
         createdAt: new Date('2024-01-15T09:20:00Z'),
     },
     {
@@ -91,7 +91,7 @@ export const mockContactMessages = [
         name: 'Pastor James Wilson',
         email: 'jwilson@communitychurch.org',
         message:
-            "We would love to have you speak at our church's upcoming revival event in March. Your ministry's focus on hope and healing aligns perfectly with our theme. Please let me know if you're available.",
+            "We would love to have you speak at our church's upcoming revival event in March. Your discipleship's focus on hope and healing aligns perfectly with our theme. Please let me know if you're available.",
         createdAt: new Date('2024-01-13T11:30:00Z'),
     },
 ];

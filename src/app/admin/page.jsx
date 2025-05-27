@@ -83,7 +83,7 @@ export default function Admin() {
                             Admin Dashboard
                         </h1>
                         <p className='text-lg text-navy-600'>
-                            Loading ministry data...
+                            Loading discipleship data...
                         </p>
                     </div>
                 </div>
@@ -98,11 +98,11 @@ export default function Admin() {
                 <div className='text-center mb-8'>
                     <FaShieldAlt className='w-12 h-12 mx-auto text-ocean-500 mb-4' />
                     <h1 className='text-4xl font-bold text-navy-700 mb-4'>
-                        Ministry Admin Dashboard
+                        Discipleship Admin Dashboard
                     </h1>
                     <p className='text-lg text-navy-600'>
                         Manage prayer requests and contact messages for Storm to
-                        Shore Ministry
+                        Shore Displeship
                     </p>
                 </div>
 
@@ -347,7 +347,7 @@ export default function Admin() {
                                         No Contact Messages
                                     </h3>
                                     <p className='text-navy-500'>
-                                        Contact messages from your ministry
+                                        Contact messages from your discipleship
                                         website will appear here.
                                     </p>
                                 </CardContent>
@@ -395,7 +395,7 @@ export default function Admin() {
                                                 className='bg-ocean-500 hover:bg-ocean-600 text-white'
                                                 onClick={() =>
                                                     window.open(
-                                                        `mailto:${contact.email}?subject=Re: Your message to Storm to Shore Ministry`,
+                                                        `mailto:${contact.email}?subject=Re: Your message to Storm to Shore Discipleship`,
                                                     )
                                                 }
                                             >

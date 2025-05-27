@@ -23,9 +23,9 @@ export default function About() {
                         About Storm to Shore
                     </h1>
                     <p className='text-xl opacity-90 leading-relaxed max-w-3xl mx-auto'>
-                        A Christ-centered ministry dedicated to helping people
-                        navigate life's storms and find their anchor in Jesus
-                        Christ.
+                        A Christ-centered discipleship dedicated to helping
+                        people navigate life's storms and find their anchor in
+                        Jesus Christ.
                     </p>
                 </div>
             </section>
@@ -128,11 +128,12 @@ export default function About() {
 
                     <div className='prose prose-lg mx-auto text-navy-600'>
                         <p className='text-xl leading-relaxed mb-6'>
-                            The name "Storm to Shore" comes from the biblical
-                            imagery of God as our refuge and anchor in life's
-                            storms. Just as sailors look to the shore for safety
-                            and direction, we help people fix their eyes on
-                            Jesus - our eternal shore and safe harbor.
+                            Storm to Shore was born from a deep conviction: that
+                            no one is ever too lost to be found, and no storm is
+                            too strong for the One who calms the seas. We exist
+                            to walk with those navigating life’s hardest
+                            moments. Offering encouragement, biblical teaching,
+                            and a place to grow in obedience and faith.
                         </p>
 
                         <blockquote className='font-bible text-2xl font-medium text-center text-navy-700 my-8 p-6 bg-ocean-50 border-l-4 border-ocean-500 rounded-r-lg'>
@@ -146,12 +147,13 @@ export default function About() {
                         </blockquote>
 
                         <p className='text-lg leading-relaxed mb-6'>
-                            This ministry was born out of a deep conviction that
-                            prayer changes everything and that no one should
-                            walk through life's difficulties alone. We've
-                            experienced firsthand how God uses His people to
-                            bring comfort, hope, and healing to those who are
-                            hurting.
+                            Our journey began with a passion for discipleship
+                            and a desire to build a Christ-centered community
+                            that points people from the chaos of the storm to
+                            the peace found on the shore of God’s promises.
+                            Here, we believe transformation happens through the
+                            truth of Scripture, the power of prayer, and the
+                            fellowship of believers walking together.
                         </p>
 
                         <p className='text-lg leading-relaxed'>
@@ -175,7 +177,7 @@ export default function About() {
                         </h2>
                         <p className='text-xl text-navy-600'>
                             These core values guide everything we do as a
-                            ministry community.
+                            discipleship community.
                         </p>
                     </div>
 
@@ -198,8 +200,9 @@ export default function About() {
                             </h3>
                             <p className='text-navy-600 text-lg'>
                                 We believe in being real about life's struggles
-                                and God's goodness. Our ministry is a safe space
-                                to share honestly and receive genuine care.
+                                and God's goodness. Our discipleship is a safe
+                                space to share honestly and receive genuine
+                                care.
                             </p>
                         </div>
 

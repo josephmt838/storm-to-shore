@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FaAnchor, FaBookOpen, FaHeart, FaUsers } from 'react-icons/fa';
 import { Button } from '../components/ui/button';
 import {
@@ -11,6 +12,7 @@ import {
 } from '../components/ui/card';
 
 export default function HomePage() {
+    const router = useRouter();
     return (
         <div className='min-h-screen'>
             {/* Hero Section */}
@@ -25,8 +27,8 @@ export default function HomePage() {
                     </h1>
                     <p className='text-xl md:text-2xl mb-8 opacity-90 leading-relaxed max-w-3xl mx-auto'>
                         Finding peace in God's presence through life's storms. A
-                        Christ-centered ministry offering prayer, encouragement,
-                        and biblical truth.
+                        Christ-centered discipleship offering prayer,
+                        encouragement, and biblical truth.
                     </p>
                     <div className='flex flex-col sm:flex-row gap-4 justify-center'>
                         <Link href='/prayer-submit'>
@@ -58,16 +60,19 @@ export default function HomePage() {
                             Anchored in Faith
                         </h2>
                         <p className='text-xl text-navy-600 max-w-2xl mx-auto'>
-                            Our ministry provides a safe harbor for those
+                            Our discipleship provides a safe harbor for those
                             navigating life's challenges, offering prayer
                             support and biblical encouragement.
                         </p>
                     </div>
 
                     <div className='grid md:grid-cols-3 gap-8'>
-                        <Card className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'>
+                        <Card
+                            className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'
+                            onClick={() => router.push('/prayer-wall')}
+                        >
                             <CardHeader className='text-center'>
-                                <FaHeart className='w-6 h-6 text-ocean-500 mb-4' />
+                                <FaHeart className='w-6 h-6 text-ocean-500 mb-4 mx-auto' />
                                 <CardTitle className='text-navy-700'>
                                     Prayer Support
                                 </CardTitle>
@@ -80,10 +85,12 @@ export default function HomePage() {
                                 </p>
                             </CardContent>
                         </Card>
-
-                        <Card className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'>
+                        <Card
+                            className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'
+                            onClick={() => router.push('/contact')}
+                        >
                             <CardHeader className='text-center'>
-                                <FaUsers className='w-6 h-6 text-ocean-500 mb-4' />
+                                <FaUsers className='w-6 h-6 text-ocean-500 mb-4 mx-auto' />
                                 <CardTitle className='text-navy-700'>
                                     Community Care
                                 </CardTitle>
@@ -97,9 +104,12 @@ export default function HomePage() {
                             </CardContent>
                         </Card>
 
-                        <Card className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'>
+                        <Card
+                            className='border-2 border-navy-100 hover:border-ocean-400 transition-colors'
+                            onClick={() => router.push('/media')}
+                        >
                             <CardHeader className='text-center'>
-                                <FaBookOpen className='w-6 h-6 text-ocean-500 mb-4' />
+                                <FaBookOpen className='w-6 h-6 text-ocean-500 mb-4 mx-auto' />
                                 <CardTitle className='text-navy-700'>
                                     Biblical Truth
                                 </CardTitle>
@@ -155,7 +165,7 @@ export default function HomePage() {
                                 variant='outline'
                                 className='border-white text-navy-700 hover:text-white hover:bg-navy-700 px-8 py-3 text-lg'
                             >
-                                Contact Our Ministry
+                                Contact Our Discipleship
                             </Button>
                         </Link>
                     </div>

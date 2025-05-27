@@ -64,12 +64,12 @@ export default function Contact() {
                 <div className='text-center mb-12'>
                     <FaComments className='w-12 h-12 mx-auto text-ocean-500 mb-4' />
                     <h1 className='text-4xl font-bold text-navy-700 mb-4'>
-                        Contact Our Ministry
+                        Contact Our Discipleship
                     </h1>
                     <p className='text-lg text-navy-600 max-w-2xl mx-auto'>
                         We'd love to hear from you! Whether you have questions,
-                        need prayer, or want to learn more about our ministry,
-                        please reach out.
+                        need prayer, or want to learn more about our
+                        discipleship, please reach out.
                     </p>
                 </div>
 

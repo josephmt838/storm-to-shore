@@ -27,8 +27,9 @@ export default function Footer() {
                             </span>
                         </div>
                         <p className='mb-6 max-w-md'>
-                            A Christ-centered ministry helping people navigate
-                            life's storms and find peace in God's presence.
+                            A Christ-centered discipleship helping people
+                            navigate life's storms and find peace in God's
+                            presence.
                         </p>
                         <div className='flex space-x-4'>
                             <Link
@@ -71,7 +72,7 @@ export default function Footer() {
                             </li>
                             <li>
                                 <Link
-                                    href='/prayer/wall'
+                                    href='/prayer-wall'
                                     className='hover:text-ocean-400 transition-colors'
                                 >
                                     Prayer Wall

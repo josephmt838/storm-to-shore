@@ -245,9 +245,9 @@ export default function PrayerSubmit() {
                                                 </FormLabel>
                                                 <p className='text-sm text-navy-600'>
                                                     Check this if you'd like
-                                                    someone from our ministry
-                                                    team to reach out to you
-                                                    personally.
+                                                    someone from our
+                                                    discipleship team to reach
+                                                    out to you personally.
                                                 </p>
                                             </div>
                                         </FormItem>

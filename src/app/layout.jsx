@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
                 <title>Storm to Shore</title>
                 <meta
                     name='description'
-                    content="A Christ-centered ministry helping people navigate life's storms and find peace in God's presence."
+                    content="A Christ-centered discipleship helping people navigate life's storms and find peace in God's presence."
                 />
                 <meta
                     name='viewport'
