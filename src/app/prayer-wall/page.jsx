@@ -2,15 +2,20 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getPublicApprovedPrayers } from '@/lib/mockData';
+import { apiRequest } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
 import { FaCalendar, FaHeart, FaUsers } from 'react-icons/fa';
 import { PiHandsPraying } from 'react-icons/pi';
 
 export default function PrayerWall() {
     const { data: prayers = [], isLoading } = useQuery({
-        queryKey: ['/api/prayers/public'],
-        queryFn: () => getPublicApprovedPrayers(),
+        queryKey: ['prayer/public'],
+        queryFn: async () => {
+            const response = await apiRequest('GET', '/prayer/public');
+            return response.json();
+        },
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        refetchOnWindowFocus: false,
     });
 
     if (isLoading) {
@@ -98,7 +103,8 @@ export default function PrayerWall() {
                                     {prayer.count && (
                                         <div className='mt-4 p-3 bg-ocean-50 border border-ocean-200 rounded-md'>
                                             <p className='text-sm text-ocean-700'>
-                                                <PiHandsPraying /> +{count}
+                                                <PiHandsPraying /> +
+                                                {prayer.count}
                                             </p>
                                         </div>
                                     )}

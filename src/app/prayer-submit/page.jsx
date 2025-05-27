@@ -16,7 +16,7 @@ import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast.jsx';
-import { addPrayerRequest } from '@/lib/mockData';
+import { apiRequest } from '@/lib/queryClient';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { FaHeart, FaPaperPlane } from 'react-icons/fa';
@@ -37,19 +37,18 @@ export default function PrayerSubmit() {
 
     const submitPrayerMutation = useMutation({
         mutationFn: async (data) => {
-            // Simulate API call with mock data
-            const newRequest = {
+            const response = await apiRequest('POST', 'prayer', {
                 ...data,
                 isPublic: data.isPublic === 'true',
-            };
-            addPrayerRequest(newRequest);
-            return newRequest;
+            });
+            return response.json();
         },
         onSuccess: () => {
             toast({
                 title: 'Prayer Request Submitted',
                 description:
                     'Thank you for sharing your prayer request. Our community will be praying for you.',
+                variant: 'success',
             });
             form.reset();
         },
@@ -94,46 +93,48 @@ export default function PrayerSubmit() {
                                 onSubmit={form.handleSubmit(onSubmit)}
                                 className='space-y-6'
                             >
-                                <FormField
-                                    control={form.control}
-                                    name='name'
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className='text-navy-700 font-semibold'>
-                                                Your Name
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder='Enter your name'
-                                                    className='border-navy-200 focus:border-ocean-500'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+                                    <FormField
+                                        control={form.control}
+                                        name='name'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='text-navy-700 font-semibold'>
+                                                    Your Name
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder='Enter your name'
+                                                        className='border-navy-200 focus:border-ocean-500'
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
-                                <FormField
-                                    control={form.control}
-                                    name='email'
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className='text-navy-700 font-semibold'>
-                                                Email Address
-                                            </FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    type='email'
-                                                    placeholder='your.email@example.com'
-                                                    className='border-navy-200 focus:border-ocean-500'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                                    <FormField
+                                        control={form.control}
+                                        name='email'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='text-navy-700 font-semibold'>
+                                                    Email Address
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type='email'
+                                                        placeholder='Enter your email'
+                                                        className='border-navy-200 focus:border-ocean-500'
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
 
                                 <FormField
                                     control={form.control}
@@ -189,7 +190,7 @@ export default function PrayerSubmit() {
                                                         field.onChange
                                                     }
                                                     defaultValue={field.value}
-                                                    className='mt-2'
+                                                    className='space-y-3'
                                                 >
                                                     <div className='flex items-center space-x-2'>
                                                         <RadioGroupItem
@@ -230,7 +231,7 @@ export default function PrayerSubmit() {
                                     control={form.control}
                                     name='requestFollowUp'
                                     render={({ field }) => (
-                                        <FormItem className='flex flex-row items-start space-x-3 space-y-0'>
+                                        <FormItem className='flex items-center space-x-2'>
                                             <FormControl>
                                                 <Checkbox
                                                     checked={field.value}
@@ -239,17 +240,11 @@ export default function PrayerSubmit() {
                                                     }
                                                 />
                                             </FormControl>
-                                            <div className='space-y-1 leading-none'>
-                                                <FormLabel className='text-navy-700 font-semibold'>
-                                                    Request Personal Follow-up
-                                                </FormLabel>
-                                                <p className='text-sm text-navy-600'>
-                                                    Check this if you'd like
-                                                    someone from our
-                                                    discipleship team to reach
-                                                    out to you personally.
-                                                </p>
-                                            </div>
+                                            <FormLabel className='text-navy-600'>
+                                                I would like someone to follow
+                                                up with me about this prayer
+                                                request
+                                            </FormLabel>
                                         </FormItem>
                                     )}
                                 />

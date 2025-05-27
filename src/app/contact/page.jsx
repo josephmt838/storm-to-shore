@@ -13,7 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast.jsx';
-import { addContactMessage } from '@/lib/mockData';
+import { apiRequest } from '@/lib/queryClient';
 import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -32,15 +32,17 @@ export default function Contact() {
 
     const submitContactMutation = useMutation({
         mutationFn: async (data) => {
-            // Simulate API call with mock data
-            addContactMessage(data);
-            return data;
+            const response = await apiRequest('POST', `contact-messages`, {
+                ...data,
+            });
+            return response.json();
         },
         onSuccess: () => {
             toast({
                 title: 'Message Sent Successfully',
                 description:
                     "Thank you for reaching out! We'll get back to you as soon as possible.",
+                variant: 'success',
             });
             form.reset();
         },
