@@ -9,13 +9,39 @@ import { TabNavigation } from '@/components/admin/TabNavigation';
 import { useToast } from '@/hooks/use-toast.jsx';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaShieldAlt } from 'react-icons/fa';
 
 export default function Admin() {
     const { toast } = useToast();
     const queryClient = useQueryClient();
     const [selectedTab, setSelectedTab] = useState('prayers');
+
+    // Handle URL hash changes
+    useEffect(() => {
+        // Get initial tab from URL hash
+        const hash = window.location.hash.replace('#', '');
+        if (hash === 'prayers' || hash === 'contacts') {
+            setSelectedTab(hash);
+        }
+
+        // Listen for hash changes
+        const handleHashChange = () => {
+            const newHash = window.location.hash.replace('#', '');
+            if (newHash === 'prayers' || newHash === 'contacts') {
+                setSelectedTab(newHash);
+            }
+        };
+
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
+
+    // Update URL hash when tab changes
+    const handleTabChange = (tab) => {
+        setSelectedTab(tab);
+        window.location.hash = tab;
+    };
 
     const { data: prayers = [], isLoading: prayersLoading } = useQuery({
         queryKey: ['/prayer'],
@@ -64,6 +90,7 @@ export default function Admin() {
             });
         },
     });
+
     const respondeMessageMutation = useMutation({
         mutationFn: async ({ id }) => {
             const response = await apiRequest(
@@ -131,7 +158,7 @@ export default function Admin() {
                     />
                     <TabNavigation
                         selectedTab={selectedTab}
-                        setSelectedTab={setSelectedTab}
+                        setSelectedTab={handleTabChange}
                     />
 
                     {selectedTab === 'prayers' && (

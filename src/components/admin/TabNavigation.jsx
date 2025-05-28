@@ -3,11 +3,16 @@ import { FaHeart } from 'react-icons/fa';
 import { IoMailUnread } from 'react-icons/io5';
 
 export function TabNavigation({ selectedTab, setSelectedTab }) {
+    const handleTabClick = (tab) => {
+        setSelectedTab(tab);
+        // The hash will be updated by the parent component
+    };
+
     return (
         <div className='flex space-x-1 mb-8 bg-white p-1 rounded-lg border-2 border-navy-200'>
             <Button
                 variant={selectedTab === 'prayers' ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab('prayers')}
+                onClick={() => handleTabClick('prayers')}
                 className={
                     selectedTab === 'prayers'
                         ? 'bg-ocean-500 text-white'
@@ -19,7 +24,7 @@ export function TabNavigation({ selectedTab, setSelectedTab }) {
             </Button>
             <Button
                 variant={selectedTab === 'contacts' ? 'default' : 'ghost'}
-                onClick={() => setSelectedTab('contacts')}
+                onClick={() => handleTabClick('contacts')}
                 className={
                     selectedTab === 'contacts'
                         ? 'bg-ocean-500 text-white'
@@ -31,4 +36,4 @@ export function TabNavigation({ selectedTab, setSelectedTab }) {
             </Button>
         </div>
     );
-} 
+}
