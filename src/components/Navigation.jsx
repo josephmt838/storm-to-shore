@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
     Sheet,
@@ -6,29 +8,28 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet';
+import { useAuth } from '@/contexts/AuthContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { FaAnchor, FaBars } from 'react-icons/fa';
 import { PiHandsPrayingFill } from 'react-icons/pi';
 
+const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Prayer Wall', href: '/prayer-wall' },
+    { label: 'Contact', href: '/contact' },
+];
+
 export default function Navigation() {
-    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
+    const isMobile = useIsMobile();
+    const pathname = usePathname();
+    const { isAuth, signOut, userRole } = useAuth();
 
-    const navItems = [
-        { href: '/', label: 'Home' },
-        { href: '/prayer-wall', label: 'Prayer Wall' },
-        { href: '/about', label: 'About' },
-        { href: '/media', label: 'Media' },
-        { href: '/contact', label: 'Contact' },
-    ];
-
-    const isActive = (href) => {
-        if (href === '/' && pathname === '/') return true;
-        if (href !== '/' && pathname.startsWith(href)) return true;
-        return false;
-    };
+    const isActive = (path) => pathname === path;
 
     return (
         <header className='bg-white shadow-sm sticky top-0 z-50'>
@@ -68,17 +69,39 @@ export default function Navigation() {
                                     {item.label}
                                 </Link>
                             ))}
-                            <Link href='/prayer-submit'>
-                                <Button className='bg-ocean-500 hover:bg-ocean-600 text-white hidden lg:block'>
-                                    Submit Prayer
-                                </Button>
-                                <PiHandsPrayingFill className='lg:hidden block' />
-                            </Link>
+                            {isAuth && (
+                                <>
+                                    {userRole === 'admin' && (
+                                        <Link href='/admin'>
+                                            <Button variant='ghost'>
+                                                Admin
+                                            </Button>
+                                        </Link>
+                                    )}
+                                    <Link href='/prayer-submit'>
+                                        <Button className='bg-ocean-500 hover:bg-ocean-600 text-white hidden lg:block'>
+                                            Submit Prayer
+                                        </Button>
+                                        <PiHandsPrayingFill className='lg:hidden block' />
+                                    </Link>
+                                    <Button
+                                        onClick={signOut}
+                                        variant='ghost'
+                                    >
+                                        Logout
+                                    </Button>
+                                </>
+                            )}
+                            {!isAuth && (
+                                <Link href='/login'>
+                                    <Button variant='ghost'>Login</Button>
+                                </Link>
+                            )}
                         </div>
                     </div>
 
                     {/* Mobile menu button */}
-                    <div className='md:hidden'>
+                    <div className='flex items-center md:hidden'>
                         <Sheet
                             open={isOpen}
                             onOpenChange={setIsOpen}
@@ -86,12 +109,15 @@ export default function Navigation() {
                             <SheetTrigger asChild>
                                 <Button
                                     variant='ghost'
-                                    size='icon'
+                                    className='p-2 rounded-md text-navy-600 hover:text-ocean-600'
                                 >
-                                    <FaBars className='h-6 w-6 text-navy-600' />
+                                    <FaBars className='h-6 w-6' />
                                 </Button>
                             </SheetTrigger>
-                            <SheetContent>
+                            <SheetContent
+                                side='right'
+                                className='w-[300px] sm:w-[400px]'
+                            >
                                 <SheetTitle className='sr-only'>
                                     Navigation Menu
                                 </SheetTitle>
@@ -114,14 +140,56 @@ export default function Navigation() {
                                             {item.label}
                                         </Link>
                                     ))}
-                                    <Link
-                                        href='/prayer/submit'
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        <Button className='w-full bg-ocean-500 hover:bg-ocean-600 text-white mt-4'>
-                                            Submit Prayer
-                                        </Button>
-                                    </Link>
+                                    {isAuth && (
+                                        <>
+                                            {userRole === 'admin' && (
+                                                <Link
+                                                    href='/admin'
+                                                    onClick={() =>
+                                                        setIsOpen(false)
+                                                    }
+                                                >
+                                                    <Button
+                                                        variant='ghost'
+                                                        className='w-full'
+                                                    >
+                                                        Admin
+                                                    </Button>
+                                                </Link>
+                                            )}
+                                            <Link
+                                                href='/prayer-submit'
+                                                onClick={() => setIsOpen(false)}
+                                            >
+                                                <Button className='w-full bg-ocean-500 hover:bg-ocean-600 text-white'>
+                                                    Submit Prayer
+                                                </Button>
+                                            </Link>
+                                            <Button
+                                                onClick={() => {
+                                                    signOut();
+                                                    setIsOpen(false);
+                                                }}
+                                                variant='ghost'
+                                                className='w-full'
+                                            >
+                                                Logout
+                                            </Button>
+                                        </>
+                                    )}
+                                    {!isAuth && (
+                                        <Link
+                                            href='/login'
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            <Button
+                                                variant='ghost'
+                                                className='w-full'
+                                            >
+                                                Login
+                                            </Button>
+                                        </Link>
+                                    )}
                                 </div>
                             </SheetContent>
                         </Sheet>

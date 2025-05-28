@@ -1,4 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
+import { getAuthHeader } from './cognito';
 import { API_URL } from './constants.js';
 
 async function throwIfResNotOk(res) {
@@ -10,16 +11,33 @@ async function throwIfResNotOk(res) {
 
 export async function apiRequest(method, path, data) {
     const url = `${API_URL}${path}`;
-    const res = await fetch(url, {
-        method,
-        headers: data ? { 'Content-Type': 'application/json' } : {},
-        body: data ? JSON.stringify(data) : undefined,
-        credentials: 'omit',
-        cache: 'no-store',
-    });
 
-    await throwIfResNotOk(res);
-    return res;
+    try {
+        const headers = {
+            'Content-Type': 'application/json',
+            ...getAuthHeader(),
+        };
+
+        const res = await fetch(url, {
+            method,
+            headers,
+            body: data ? JSON.stringify(data) : undefined,
+            cache: 'no-store',
+        });
+
+        if (!res.ok) {
+            const text = (await res.text()) || res.statusText;
+            throw new Error(`${res.status}: ${text}`);
+        }
+
+        return res;
+    } catch (error) {
+        if (error.message.includes('401')) {
+            // Handle unauthorized access
+            window.location.href = '/login';
+        }
+        throw error;
+    }
 }
 
 export const getQueryFn = () => {

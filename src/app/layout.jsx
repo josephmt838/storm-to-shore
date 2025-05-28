@@ -1,5 +1,6 @@
 'use client';
 
+import { AuthProvider } from '@/contexts/AuthContext';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Merriweather, Playfair } from 'next/font/google';
 import { useState } from 'react';
@@ -49,12 +50,14 @@ export default function RootLayout({ children }) {
             </head>
             <body>
                 <QueryClientProvider client={queryClient}>
-                    <div className='min-h-screen bg-navy-50 flex flex-col'>
-                        <Navigation />
-                        <main className='flex-1'>{children}</main>
-                        <Footer />
-                    </div>
-                    <Toaster />
+                    <AuthProvider>
+                        <div className='min-h-screen bg-navy-50 flex flex-col'>
+                            <Navigation />
+                            <main className='flex-1'>{children}</main>
+                            <Footer />
+                        </div>
+                        <Toaster />
+                    </AuthProvider>
                 </QueryClientProvider>
             </body>
         </html>

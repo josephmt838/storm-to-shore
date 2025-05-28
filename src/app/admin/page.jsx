@@ -1,5 +1,6 @@
 'use client';
 
+import { AdminProtectedRoute } from '@/components/AdminProtectedRoute';
 import { AdminHeader } from '@/components/admin/AdminHeader';
 import { ContactMessagesTab } from '@/components/admin/ContactMessagesTab';
 import { PrayerRequestsTab } from '@/components/admin/PrayerRequestsTab';
@@ -38,13 +39,9 @@ export default function Admin() {
 
     const updateStatusMutation = useMutation({
         mutationFn: async ({ id, status }) => {
-            const response = await await apiRequest(
-                'POST',
-                `/prayer/${id}/status`,
-                {
-                    status,
-                },
-            );
+            const response = await apiRequest('POST', `/prayer/${id}/status`, {
+                status,
+            });
 
             return response;
         },
@@ -65,9 +62,42 @@ export default function Admin() {
             });
         },
     });
+    const respondeMessageMutation = useMutation({
+        mutationFn: async ({ id }) => {
+            const response = await apiRequest(
+                'POST',
+                `contact-message/${id}/responded`,
+                {
+                    id,
+                },
+            );
+
+            return response;
+        },
+        onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['/contact-messages'] });
+            toast({
+                title: 'Contact Message Updated',
+                description: 'Contact message has been updated successfully.',
+                variant: 'success',
+            });
+        },
+        onError: (error) => {
+            toast({
+                title: 'Error',
+                description:
+                    'Failed to update contact message reponded status.',
+                variant: 'destructive',
+            });
+        },
+    });
 
     const handleStatusUpdate = (id, status) => {
         updateStatusMutation.mutate({ id, status });
+    };
+
+    const handleRespondMessage = (id) => {
+        respondeMessageMutation.mutate({ id });
     };
 
     if (prayersLoading || contactsLoading) {
@@ -89,30 +119,36 @@ export default function Admin() {
     }
 
     return (
-        <div className='min-h-screen bg-navy-50 py-12 px-4'>
-            <div className='max-w-6xl mx-auto'>
-                <AdminHeader />
-                <StatsCards
-                    prayers={prayers}
-                    contacts={contacts}
-                />
-                <TabNavigation
-                    selectedTab={selectedTab}
-                    setSelectedTab={setSelectedTab}
-                />
-
-                {selectedTab === 'prayers' && (
-                    <PrayerRequestsTab
+        <AdminProtectedRoute>
+            <div className='min-h-screen bg-navy-50 py-12 px-4'>
+                <div className='max-w-6xl mx-auto'>
+                    <AdminHeader />
+                    <StatsCards
                         prayers={prayers}
-                        handleStatusUpdate={handleStatusUpdate}
-                        updateStatusMutation={updateStatusMutation}
+                        contacts={contacts}
                     />
-                )}
+                    <TabNavigation
+                        selectedTab={selectedTab}
+                        setSelectedTab={setSelectedTab}
+                    />
 
-                {selectedTab === 'contacts' && (
-                    <ContactMessagesTab contacts={contacts} />
-                )}
+                    {selectedTab === 'prayers' && (
+                        <PrayerRequestsTab
+                            prayers={prayers}
+                            handleStatusUpdate={handleStatusUpdate}
+                            updateStatusMutation={updateStatusMutation}
+                        />
+                    )}
+
+                    {selectedTab === 'contacts' && (
+                        <ContactMessagesTab
+                            contacts={contacts}
+                            respondeMessageMutation={respondeMessageMutation}
+                            handleRespondMessage={handleRespondMessage}
+                        />
+                    )}
+                </div>
             </div>
-        </div>
+        </AdminProtectedRoute>
     );
 }

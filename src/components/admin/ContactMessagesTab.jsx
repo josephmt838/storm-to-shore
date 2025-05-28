@@ -1,9 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FaCheck } from 'react-icons/fa';
 import { IoMail, IoMailOpen } from 'react-icons/io5';
 
-export function ContactMessagesTab({ contacts }) {
+export function ContactMessagesTab({
+    contacts,
+    handleRespondMessage,
+    respondeMessageMutation,
+}) {
     if (contacts.length === 0) {
         return (
             <Card className='border-2 border-navy-200 text-center py-12'>
@@ -13,7 +18,8 @@ export function ContactMessagesTab({ contacts }) {
                         No Contact Messages
                     </h3>
                     <p className='text-navy-500'>
-                        Contact messages from your discipleship website will appear here.
+                        Contact messages from your discipleship website will
+                        appear here.
                     </p>
                 </CardContent>
             </Card>
@@ -37,7 +43,9 @@ export function ContactMessagesTab({ contacts }) {
                                     <span>Email: {contact.email}</span>
                                     <span>
                                         Date:{' '}
-                                        {new Date(contact.createdAt).toLocaleDateString()}
+                                        {new Date(
+                                            contact.createdAt,
+                                        ).toLocaleDateString()}
                                     </span>
                                 </div>
                             </div>
@@ -55,7 +63,7 @@ export function ContactMessagesTab({ contacts }) {
                                 {contact.message}
                             </p>
                         </div>
-                        <div className='pt-4 border-t border-navy-200'>
+                        <div className='pt-4 border-t border-navy-200 flex align-center gap-2'>
                             <Button
                                 className='bg-ocean-500 hover:bg-ocean-600 text-white'
                                 onClick={() =>
@@ -67,10 +75,18 @@ export function ContactMessagesTab({ contacts }) {
                                 <IoMailOpen className='w-4 h-4 mr-2' />
                                 Reply to {contact.name}
                             </Button>
+                            <Button
+                                className='bg-ocean-500 hover:bg-ocean-600 text-white'
+                                disabled={respondeMessageMutation.isPending}
+                                onClick={() => handleRespondMessage(contact.id)}
+                            >
+                                <FaCheck className='w-4 h-4 mr-2' />
+                                Check as Responded
+                            </Button>
                         </div>
                     </CardContent>
                 </Card>
             ))}
         </div>
     );
-} 
+}
