@@ -70,10 +70,10 @@ export default function PrayerWall() {
                 variant: 'success',
             });
         },
-        onError: (error) => {
+        onError: () => {
             toast({
                 title: 'Error',
-                description: error.message || 'Failed to record your prayer',
+                description: 'Failed to record your prayer',
                 variant: 'destructive',
             });
         },

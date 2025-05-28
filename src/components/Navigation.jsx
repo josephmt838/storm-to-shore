@@ -21,6 +21,7 @@ const navItems = [
     { label: 'About', href: '/about' },
     { label: 'Prayer Wall', href: '/prayer-wall' },
     { label: 'Contact', href: '/contact' },
+    { label: 'Media', href: '/media' },
 ];
 
 export default function Navigation() {
@@ -117,7 +118,7 @@ export default function Navigation() {
                             <SheetTrigger asChild>
                                 <Button
                                     variant='ghost'
-                                    className='p-2 rounded-md text-navy-600 hover:text-ocean-600'
+                                    className='p-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-white'
                                 >
                                     <FaBars className='h-6 w-6' />
                                 </Button>

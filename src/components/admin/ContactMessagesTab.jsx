@@ -77,7 +77,10 @@ export function ContactMessagesTab({
                             </Button>
                             <Button
                                 className='bg-ocean-500 hover:bg-ocean-600 text-white'
-                                disabled={respondeMessageMutation.isPending}
+                                disabled={
+                                    respondeMessageMutation.isPending ||
+                                    contact.responded === 'true'
+                                }
                                 onClick={() => handleRespondMessage(contact.id)}
                             >
                                 <FaCheck className='w-4 h-4 mr-2' />

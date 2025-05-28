@@ -121,11 +121,15 @@ export function PrayerRequestsTab({
                                     </p>
                                     <p className='text-sm text-ocean-700 flex gap-2 justify-center items-center'>
                                         <FaCheck /> Follow Up:{' '}
-                                        {prayer.followUp ? 'Yes' : 'No'}
+                                        {prayer.followUp === 'true'
+                                            ? 'Yes'
+                                            : 'No'}
                                     </p>
                                     <p className='text-sm text-ocean-700 flex gap-2 justify-center items-center'>
                                         <FaEye /> Public:{' '}
-                                        {prayer.isPublic ? 'Yes' : 'No'}
+                                        {prayer.isPublic === 'true'
+                                            ? 'Yes'
+                                            : 'No'}
                                     </p>
                                 </div>
                                 <div className='flex gap-2'>

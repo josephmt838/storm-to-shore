@@ -35,6 +35,9 @@ export default function Contact() {
             const response = await apiRequest('POST', `contact-messages`, {
                 ...data,
             });
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
             return response.json();
         },
         onSuccess: () => {
@@ -46,7 +49,7 @@ export default function Contact() {
             });
             form.reset();
         },
-        onError: () => {
+        onError: (error) => {
             toast({
                 title: 'Error',
                 description:
@@ -181,7 +184,7 @@ export default function Contact() {
                             </CardHeader>
                             <CardContent>
                                 <div className='space-y-3'>
-                                    <div className='flex justify-between'>
+                                    <div className='flex flex-col sm:flex-row sm:justify-between'>
                                         <span className='text-navy-600'>
                                             Live Bible Reading
                                         </span>
@@ -189,7 +192,7 @@ export default function Contact() {
                                             Tuesday 8:30 PM EST
                                         </span>
                                     </div>
-                                    <div className='flex justify-between'>
+                                    <div className='flex flex-col sm:flex-row sm:justify-between'>
                                         <span className='text-navy-600'>
                                             YouTube Video Releases
                                         </span>
@@ -197,7 +200,7 @@ export default function Contact() {
                                             Monday/Thursday @8 PM EST
                                         </span>
                                     </div>
-                                    <div className='flex justify-between'>
+                                    <div className='flex flex-col sm:flex-row sm:justify-between'>
                                         <span className='text-navy-600'>
                                             Email Response
                                         </span>

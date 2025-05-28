@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { APPROVED, PENDING } from '@/lib/constants';
 import { FaCheck, FaClock, FaHeart } from 'react-icons/fa';
+import { IoMail } from 'react-icons/io5';
 
 export function StatsCards({ prayers, contacts }) {
     return (
@@ -69,8 +70,9 @@ export function StatsCards({ prayers, contacts }) {
                 </CardHeader>
                 <CardContent>
                     <div className='flex items-center gap-2'>
+                        <IoMail className='w-6 h-6 text-navy-500' />
                         <span className='text-2xl font-bold text-navy-700'>
-                            {contacts.length}
+                            {contacts.length || 0}
                         </span>
                     </div>
                 </CardContent>

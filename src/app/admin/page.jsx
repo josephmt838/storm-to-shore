@@ -95,10 +95,7 @@ export default function Admin() {
         mutationFn: async ({ id }) => {
             const response = await apiRequest(
                 'POST',
-                `contact-message/${id}/responded`,
-                {
-                    id,
-                },
+                `contact-messages/${id}/responded`,
             );
 
             return response;
@@ -112,6 +109,7 @@ export default function Admin() {
             });
         },
         onError: (error) => {
+            console.log(error);
             toast({
                 title: 'Error',
                 description:
@@ -154,7 +152,9 @@ export default function Admin() {
                     <AdminHeader />
                     <StatsCards
                         prayers={prayers}
-                        contacts={contacts}
+                        contacts={
+                            contacts?.messages ? contacts.messages : contacts
+                        }
                     />
                     <TabNavigation
                         selectedTab={selectedTab}
@@ -171,7 +171,7 @@ export default function Admin() {
 
                     {selectedTab === 'contacts' && (
                         <ContactMessagesTab
-                            contacts={contacts}
+                            contacts={contacts?.messages || contacts}
                             respondeMessageMutation={respondeMessageMutation}
                             handleRespondMessage={handleRespondMessage}
                         />

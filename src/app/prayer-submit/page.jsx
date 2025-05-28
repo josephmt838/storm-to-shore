@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast.jsx';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation } from '@tanstack/react-query';
@@ -23,14 +24,13 @@ import { FaHeart, FaPaperPlane } from 'react-icons/fa';
 
 export default function PrayerSubmit() {
     const { toast } = useToast();
+    const { user } = useAuth();
 
     const form = useForm({
         defaultValues: {
-            name: '',
-            email: '',
             title: '',
             content: '',
-            isPublic: 'false',
+            isPublic: false,
             requestFollowUp: false,
         },
     });
@@ -39,7 +39,10 @@ export default function PrayerSubmit() {
         mutationFn: async (data) => {
             const response = await apiRequest('POST', 'prayer', {
                 ...data,
+                name: user.name,
+                email: user.email,
                 isPublic: data.isPublic === 'true',
+                requestFollowUp: data.requestFollowUp === 'true',
             });
             return response.json();
         },
@@ -94,49 +97,6 @@ export default function PrayerSubmit() {
                                     onSubmit={form.handleSubmit(onSubmit)}
                                     className='space-y-6'
                                 >
-                                    <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-                                        <FormField
-                                            control={form.control}
-                                            name='name'
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className='text-navy-700 font-semibold'>
-                                                        Your Name
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            placeholder='Enter your name'
-                                                            className='border-navy-200 focus:border-ocean-500'
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-
-                                        <FormField
-                                            control={form.control}
-                                            name='email'
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel className='text-navy-700 font-semibold'>
-                                                        Email Address
-                                                    </FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type='email'
-                                                            placeholder='Enter your email'
-                                                            className='border-navy-200 focus:border-ocean-500'
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
                                     <FormField
                                         control={form.control}
                                         name='title'

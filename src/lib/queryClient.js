@@ -27,15 +27,12 @@ export async function apiRequest(method, path, data) {
 
         if (!res.ok) {
             const text = (await res.text()) || res.statusText;
-            throw new Error(`${res.status}: ${text}`);
+            throw new Error(text);
         }
 
         return res;
     } catch (error) {
-        if (error.message.includes('401')) {
-            // Handle unauthorized access
-            window.location.href = '/';
-        }
+        // Just throw the error without redirecting
         throw error;
     }
 }
