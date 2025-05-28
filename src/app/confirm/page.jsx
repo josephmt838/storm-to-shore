@@ -14,7 +14,7 @@ import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast.jsx';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -28,7 +28,7 @@ function ConfirmForm() {
     const { confirmSignUp, resendConfirmationCode } = useAuth();
     const searchParams = useSearchParams();
     const email = searchParams.get('email');
-
+    const router = useRouter();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,7 +45,8 @@ function ConfirmForm() {
                     'Your email has been verified successfully. You can now log in.',
                 variant: 'success',
             });
-            window.location.href = '/login';
+
+            router.push('/login');
         } catch (error) {
             toast({
                 title: 'Verification Failed',
@@ -91,9 +92,7 @@ function ConfirmForm() {
                                     expired.
                                 </p>
                                 <Button
-                                    onClick={() =>
-                                        (window.location.href = '/login')
-                                    }
+                                    onClick={() => router.push('/login')}
                                     className='bg-ocean-500 hover:bg-ocean-600 text-white'
                                 >
                                     Return to Login

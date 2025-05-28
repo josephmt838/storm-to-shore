@@ -11,7 +11,7 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaAnchor, FaBars } from 'react-icons/fa';
 import { PiHandsPrayingFill } from 'react-icons/pi';
@@ -28,6 +28,14 @@ export default function Navigation() {
     const isMobile = useIsMobile();
     const pathname = usePathname();
     const { isAuth, signOut, userRole } = useAuth();
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        await signOut();
+        setIsOpen(false);
+
+        router.push('/');
+    };
 
     const isActive = (path) => pathname === path;
 
@@ -85,7 +93,7 @@ export default function Navigation() {
                                         <PiHandsPrayingFill className='lg:hidden block' />
                                     </Link>
                                     <Button
-                                        onClick={signOut}
+                                        onClick={handleSignOut}
                                         variant='ghost'
                                     >
                                         Logout
@@ -166,10 +174,7 @@ export default function Navigation() {
                                                 </Button>
                                             </Link>
                                             <Button
-                                                onClick={() => {
-                                                    signOut();
-                                                    setIsOpen(false);
-                                                }}
+                                                onClick={handleSignOut}
                                                 variant='ghost'
                                                 className='w-full'
                                             >
