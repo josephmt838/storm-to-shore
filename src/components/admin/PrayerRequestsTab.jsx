@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { APPROVED, PENDING, REJECTED } from '@/lib/constants';
 import { useState } from 'react';
-import { FaCalendar, FaHeart, FaSearch } from 'react-icons/fa';
+import { FaCalendar, FaCheck, FaEye, FaHeart, FaSearch } from 'react-icons/fa';
 import { PiHandsPraying } from 'react-icons/pi';
 import { PrayerRequestFilter } from './PrayerRequestFilter';
 
@@ -92,7 +92,7 @@ export function PrayerRequestsTab({
                                             <span className='flex items-center gap-1'>
                                                 <FaCalendar className='w-6 h-6 text-ocean-500' />
                                                 {new Date(
-                                                    prayer.createdAt,
+                                                    prayer.date,
                                                 ).toLocaleDateString()}
                                             </span>
                                         </div>
@@ -113,21 +113,28 @@ export function PrayerRequestsTab({
                             </CardHeader>
                             <CardContent className='p-6'>
                                 <p className='text-navy-600 leading-relaxed whitespace-pre-wrap mb-4'>
-                                    {prayer.content}
+                                    {prayer.text}
                                 </p>
-                                {prayer.count && (
-                                    <div className='mb-4 p-3 bg-ocean-50 border border-ocean-200 rounded-md'>
-                                        <p className='text-sm text-ocean-700'>
-                                            <PiHandsPraying /> +{prayer.count}
-                                        </p>
-                                    </div>
-                                )}
+                                <div className='mb-4 p-3 bg-ocean-50 border border-ocean-200 rounded-md flex gap-2 justify-evenly'>
+                                    <p className='text-sm text-ocean-700 flex gap-2 justify-center items-center'>
+                                        <PiHandsPraying /> {prayer.count || 0}
+                                    </p>
+                                    <p className='text-sm text-ocean-700 flex gap-2 justify-center items-center'>
+                                        <FaCheck /> Follow Up:{' '}
+                                        {prayer.followUp ? 'Yes' : 'No'}
+                                    </p>
+                                    <p className='text-sm text-ocean-700 flex gap-2 justify-center items-center'>
+                                        <FaEye /> Public:{' '}
+                                        {prayer.isPublic ? 'Yes' : 'No'}
+                                    </p>
+                                </div>
                                 <div className='flex gap-2'>
                                     <Button
                                         onClick={() =>
                                             handleStatusUpdate(
                                                 prayer.id,
                                                 APPROVED,
+                                                prayer.isPublic,
                                             )
                                         }
                                         disabled={
@@ -143,6 +150,7 @@ export function PrayerRequestsTab({
                                             handleStatusUpdate(
                                                 prayer.id,
                                                 REJECTED,
+                                                prayer.isPublic,
                                             )
                                         }
                                         disabled={

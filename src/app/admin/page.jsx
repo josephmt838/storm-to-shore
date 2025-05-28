@@ -38,9 +38,11 @@ export default function Admin() {
     });
 
     const updateStatusMutation = useMutation({
-        mutationFn: async ({ id, status }) => {
-            const response = await apiRequest('POST', `/prayer/${id}/status`, {
-                status,
+        mutationFn: async ({ id, status, isPublic, date }) => {
+            const response = await apiRequest('POST', `prayer/${id}/status`, {
+                id,
+                prayerStatus: status,
+                isPublic,
             });
 
             return response;
@@ -92,8 +94,8 @@ export default function Admin() {
         },
     });
 
-    const handleStatusUpdate = (id, status) => {
-        updateStatusMutation.mutate({ id, status });
+    const handleStatusUpdate = (id, status, isPublic, date) => {
+        updateStatusMutation.mutate({ id, status, isPublic, date });
     };
 
     const handleRespondMessage = (id) => {

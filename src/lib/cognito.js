@@ -57,7 +57,6 @@ export const signIn = (username, password) => {
                     resolve({ success: true });
                 },
                 onFailure: (err) => {
-                    console.log('Login error:', err);
                     if (err.name === 'UserNotConfirmedException') {
                         // Don't set any tokens for unconfirmed users
                         resolve({

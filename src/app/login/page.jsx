@@ -41,7 +41,6 @@ export default function Login() {
     const onSubmit = async (data) => {
         try {
             const result = await signIn(data.email, data.password);
-            console.log('Login result:', result);
 
             if (result.userNotConfirmed) {
                 toast({
@@ -65,7 +64,6 @@ export default function Login() {
                 });
             }
         } catch (error) {
-            console.error('Login error:', error);
             if (error.name === 'UserNotConfirmedException') {
                 toast({
                     title: 'Account Not Confirmed',

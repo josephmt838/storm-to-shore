@@ -28,12 +28,10 @@ export function AuthProvider({ children }) {
             try {
                 const payload = JSON.parse(atob(idToken.split('.')[1]));
                 const groups = payload['cognito:groups'] || [];
-                console.log(payload);
                 setUserRole(
                     groups.includes('storm-to-shore-admin') ? 'admin' : 'user',
                 );
             } catch (error) {
-                console.error('Error parsing token:', error);
                 setUserRole('user');
             }
         }
@@ -59,7 +57,6 @@ export function AuthProvider({ children }) {
                             : 'user',
                     );
                 } catch (error) {
-                    console.error('Error parsing token:', error);
                     setUserRole('user');
                 }
             }
@@ -109,7 +106,6 @@ export function AuthProvider({ children }) {
                 );
             });
         } catch (error) {
-            console.error('Error signing up:', error);
             throw error;
         }
     };

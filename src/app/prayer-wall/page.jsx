@@ -5,18 +5,21 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { apiRequest } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
 import { FaCalendar, FaHeart, FaUsers } from 'react-icons/fa';
+import { IoPerson } from 'react-icons/io5';
 import { PiHandsPraying } from 'react-icons/pi';
 
 export default function PrayerWall() {
     const { data: prayers = [], isLoading } = useQuery({
         queryKey: ['prayer/public'],
         queryFn: async () => {
-            const response = await apiRequest('GET', '/prayer/public');
+            const response = await apiRequest('GET', 'prayer/public');
             return response.json();
         },
         staleTime: 5 * 60 * 1000, // 5 minutes
         refetchOnWindowFocus: false,
     });
+
+    const handlePrayerCount = (prayer) => console.log(prayer);
 
     if (isLoading) {
         return (
@@ -79,14 +82,14 @@ export default function PrayerWall() {
                                                     'Prayer Request'}
                                             </CardTitle>
                                             <div className='flex items-center gap-4 text-sm text-navy-600'>
-                                                <span className='flex items-center gap-1'>
-                                                    <FaHeart className='w-6 h-6 text-ocean-500' />
+                                                <span className='flex items-center gap-2'>
+                                                    <IoPerson className='w-6 h-6 text-ocean-500' />
                                                     {prayer.name || 'Anonymous'}
                                                 </span>
-                                                <span className='flex items-center gap-1'>
+                                                <span className='flex items-center gap-2'>
                                                     <FaCalendar className='w-6 h-6 text-ocean-500' />
                                                     {new Date(
-                                                        prayer.createdAt,
+                                                        prayer.date,
                                                     ).toLocaleDateString()}
                                                 </span>
                                             </div>
@@ -96,18 +99,18 @@ export default function PrayerWall() {
                                         </Badge>
                                     </div>
                                 </CardHeader>
-                                <CardContent className='p-6'>
-                                    <p className='text-navy-600 leading-relaxed whitespace-pre-wrap'>
-                                        {prayer.content}
+                                <CardContent className='pb-6'>
+                                    <p className='text-navy-600 leading-relaxed whitespace-pre-wrap mb-2'>
+                                        {prayer.text}
                                     </p>
-                                    {prayer.count && (
-                                        <div className='mt-4 p-3 bg-ocean-50 border border-ocean-200 rounded-md'>
-                                            <p className='text-sm text-ocean-700'>
-                                                <PiHandsPraying /> +
-                                                {prayer.count}
-                                            </p>
-                                        </div>
-                                    )}
+                                    <p
+                                        className='text-sm text-ocean-700 flex gap-2 items-center hover:cursor-pointer'
+                                        onClick={() =>
+                                            handlePrayerCount(prayer)
+                                        }
+                                    >
+                                        <PiHandsPraying /> {prayer.count || 0}
+                                    </p>
                                 </CardContent>
                             </Card>
                         ))}

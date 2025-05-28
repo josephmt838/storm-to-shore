@@ -13,17 +13,17 @@ import {
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast.jsx';
-import { useSearchParams } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { FaCheckCircle } from 'react-icons/fa';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 const formSchema = z.object({
     code: z.string().min(6, 'Code must be 6 characters'),
 });
 
-export default function Confirm() {
+function ConfirmForm() {
     const { toast } = useToast();
     const { confirmSignUp, resendConfirmationCode } = useAuth();
     const searchParams = useSearchParams();
@@ -41,14 +41,17 @@ export default function Confirm() {
             await confirmSignUp(email, data.code);
             toast({
                 title: 'Email Verified',
-                description: 'Your email has been verified successfully. You can now log in.',
+                description:
+                    'Your email has been verified successfully. You can now log in.',
                 variant: 'success',
             });
             window.location.href = '/login';
         } catch (error) {
             toast({
                 title: 'Verification Failed',
-                description: error.message || 'Failed to verify email. Please try again.',
+                description:
+                    error.message ||
+                    'Failed to verify email. Please try again.',
                 variant: 'destructive',
             });
         }
@@ -59,13 +62,15 @@ export default function Confirm() {
             await resendConfirmationCode(email);
             toast({
                 title: 'Code Resent',
-                description: 'A new verification code has been sent to your email.',
+                description:
+                    'A new verification code has been sent to your email.',
                 variant: 'success',
             });
         } catch (error) {
             toast({
                 title: 'Error',
-                description: error.message || 'Failed to resend verification code.',
+                description:
+                    error.message || 'Failed to resend verification code.',
                 variant: 'destructive',
             });
         }
@@ -82,10 +87,13 @@ export default function Confirm() {
                                     Invalid Confirmation Link
                                 </h1>
                                 <p className='text-navy-600 mb-4'>
-                                    This confirmation link is invalid or has expired.
+                                    This confirmation link is invalid or has
+                                    expired.
                                 </p>
                                 <Button
-                                    onClick={() => window.location.href = '/login'}
+                                    onClick={() =>
+                                        (window.location.href = '/login')
+                                    }
                                     className='bg-ocean-500 hover:bg-ocean-600 text-white'
                                 >
                                     Return to Login
@@ -101,20 +109,10 @@ export default function Confirm() {
     return (
         <div className='min-h-screen bg-navy-50 py-12 px-4'>
             <div className='max-w-md mx-auto'>
-                <div className='text-center mb-8'>
-                    <FaCheckCircle className='w-12 h-12 mx-auto text-ocean-500 mb-4' />
-                    <h1 className='text-4xl font-bold text-navy-700 mb-4'>
-                        Verify Your Email
-                    </h1>
-                    <p className='text-lg text-navy-600'>
-                        Please enter the verification code sent to your email
-                    </p>
-                </div>
-
                 <Card className='border-2 border-navy-200 shadow-lg'>
-                    <CardHeader className='bg-gradient-to-r from-ocean-500 to-navy-600 text-white rounded-t-lg'>
-                        <CardTitle className='text-center text-xl'>
-                            Verification Code
+                    <CardHeader>
+                        <CardTitle className='text-2xl font-bold text-navy-700 text-center'>
+                            Confirm Your Email
                         </CardTitle>
                     </CardHeader>
                     <CardContent className='p-8'>
@@ -128,13 +126,12 @@ export default function Confirm() {
                                     name='code'
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className='text-navy-700 font-semibold'>
+                                            <FormLabel>
                                                 Verification Code
                                             </FormLabel>
                                             <FormControl>
                                                 <Input
                                                     placeholder='Enter 6-digit code'
-                                                    className='border-navy-200 focus:border-ocean-500'
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -142,31 +139,43 @@ export default function Confirm() {
                                         </FormItem>
                                     )}
                                 />
-
-                                <Button
-                                    type='submit'
-                                    className='w-full bg-ocean-500 hover:bg-ocean-600 text-white py-3 text-lg'
-                                >
-                                    Verify Email
-                                </Button>
+                                <div className='flex flex-col space-y-4'>
+                                    <Button
+                                        type='submit'
+                                        className='bg-ocean-500 hover:bg-ocean-600 text-white'
+                                    >
+                                        Verify Email
+                                    </Button>
+                                    <Button
+                                        type='button'
+                                        variant='outline'
+                                        onClick={handleResendCode}
+                                    >
+                                        Resend Code
+                                    </Button>
+                                </div>
                             </form>
                         </Form>
-
-                        <div className='mt-6 text-center'>
-                            <p className='text-navy-600'>
-                                Didn't receive the code?{' '}
-                                <Button
-                                    onClick={handleResendCode}
-                                    variant='link'
-                                    className='text-ocean-500 hover:text-ocean-600 font-semibold p-0'
-                                >
-                                    Resend Code
-                                </Button>
-                            </p>
-                        </div>
                     </CardContent>
                 </Card>
             </div>
         </div>
     );
-} 
+}
+
+export default function Confirm() {
+    return (
+        <Suspense
+            fallback={
+                <div className='min-h-screen bg-navy-50 flex items-center justify-center'>
+                    <div className='text-center'>
+                        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-ocean-500 mx-auto'></div>
+                        <p className='mt-4 text-navy-700'>Loading...</p>
+                    </div>
+                </div>
+            }
+        >
+            <ConfirmForm />
+        </Suspense>
+    );
+}

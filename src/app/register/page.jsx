@@ -77,7 +77,7 @@ export default function Register() {
                 description: 'Please check your email for verification code',
                 variant: 'success',
             });
-            router.push('/login');
+            router.push('/confirm');
         } catch (error) {
             toast({
                 title: 'Registration Failed',
