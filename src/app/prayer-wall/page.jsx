@@ -2,13 +2,20 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaCalendar, FaHeart, FaUsers } from 'react-icons/fa';
 import { IoPerson } from 'react-icons/io5';
 import { PiHandsPraying } from 'react-icons/pi';
 
 export default function PrayerWall() {
+    const { user } = useAuth();
+    const queryClient = useQueryClient();
+    const { toast } = useToast();
+
+    // Query for public prayers
     const { data: prayers = [], isLoading } = useQuery({
         queryKey: ['prayer/public'],
         queryFn: async () => {
@@ -19,7 +26,80 @@ export default function PrayerWall() {
         refetchOnWindowFocus: false,
     });
 
-    const handlePrayerCount = (prayer) => console.log(prayer);
+    // Query for user's prayed prayers
+    const { data: prayedPrayers = [] } = useQuery({
+        queryKey: ['prayer/prayed', user?.id],
+        queryFn: async () => {
+            if (!user?.id) {
+                return [];
+            }
+            try {
+                const response = await apiRequest(
+                    'GET',
+                    `prayer/prayed?userId=${user.id}`,
+                );
+                if (!response.ok) {
+                    throw new Error('Failed to fetch prayed prayers');
+                }
+                return response.json();
+            } catch (error) {
+                console.error('Error fetching prayed prayers:', error);
+                throw error;
+            }
+        },
+        enabled: !!user?.id && prayers.length > 0,
+        staleTime: 5 * 60 * 1000, // 5 minutes
+        refetchOnWindowFocus: false,
+    });
+
+    // Mutation for praying
+    const prayMutation = useMutation({
+        mutationFn: async (prayerId) => {
+            const response = await apiRequest('POST', 'prayer/prayed', {
+                userId: user.id,
+                prayerId: prayerId,
+            });
+            return response.json();
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['prayer/public']);
+            queryClient.invalidateQueries(['prayer/prayed', user?.id]);
+            toast({
+                title: 'Success',
+                description: 'Thank you for praying!',
+                variant: 'success',
+            });
+        },
+        onError: (error) => {
+            toast({
+                title: 'Error',
+                description: error.message || 'Failed to record your prayer',
+                variant: 'destructive',
+            });
+        },
+    });
+
+    const handlePrayerCount = (prayer) => {
+        if (!user) {
+            toast({
+                title: 'Authentication Required',
+                description: 'Please log in to pray for this request',
+                variant: 'destructive',
+            });
+            return;
+        }
+
+        if (prayedPrayers.some((p) => p.id === prayer.id)) {
+            toast({
+                title: 'Already Prayed',
+                description: 'You have already prayed for this request',
+                variant: 'default',
+            });
+            return;
+        }
+
+        prayMutation.mutate(prayer.id);
+    };
 
     if (isLoading) {
         return (
@@ -103,14 +183,23 @@ export default function PrayerWall() {
                                     <p className='text-navy-600 leading-relaxed whitespace-pre-wrap mb-2'>
                                         {prayer.text}
                                     </p>
-                                    <p
-                                        className='text-sm text-ocean-700 flex gap-2 items-center hover:cursor-pointer'
+                                    <button
                                         onClick={() =>
                                             handlePrayerCount(prayer)
                                         }
+                                        disabled={prayedPrayers.some(
+                                            (p) => p.id === prayer.id,
+                                        )}
+                                        className={`text-sm flex gap-2 items-center ${
+                                            prayedPrayers.some(
+                                                (p) => p.id === prayer.id,
+                                            )
+                                                ? 'text-navy-400 cursor-not-allowed'
+                                                : 'text-ocean-700 hover:text-ocean-900 cursor-pointer'
+                                        }`}
                                     >
                                         <PiHandsPraying /> {prayer.count || 0}
-                                    </p>
+                                    </button>
                                 </CardContent>
                             </Card>
                         ))}

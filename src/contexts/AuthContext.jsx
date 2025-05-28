@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
     const [isAuth, setIsAuth] = useState(false);
     const [loading, setLoading] = useState(true);
     const [userRole, setUserRole] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         checkAuth();
@@ -23,7 +24,7 @@ export function AuthProvider({ children }) {
         const authenticated = isAuthenticated();
         setIsAuth(authenticated);
         if (authenticated) {
-            // Get user role from ID token
+            // Get user info from ID token
             const { idToken } = getTokens();
             try {
                 const payload = JSON.parse(atob(idToken.split('.')[1]));
@@ -31,8 +32,14 @@ export function AuthProvider({ children }) {
                 setUserRole(
                     groups.includes('storm-to-shore-admin') ? 'admin' : 'user',
                 );
+                setUser({
+                    id: payload.sub,
+                    email: payload.email,
+                    name: payload.name,
+                });
             } catch (error) {
                 setUserRole('user');
+                setUser(null);
             }
         }
         setLoading(false);
@@ -46,7 +53,7 @@ export function AuthProvider({ children }) {
             }
             if (result.success) {
                 setIsAuth(true);
-                // Get user role from ID token
+                // Get user info from ID token
                 const { idToken } = getTokens();
                 try {
                     const payload = JSON.parse(atob(idToken.split('.')[1]));
@@ -56,8 +63,14 @@ export function AuthProvider({ children }) {
                             ? 'admin'
                             : 'user',
                     );
+                    setUser({
+                        id: payload.sub,
+                        email: payload.email,
+                        name: payload.name,
+                    });
                 } catch (error) {
                     setUserRole('user');
+                    setUser(null);
                 }
             }
             return result;
@@ -115,6 +128,7 @@ export function AuthProvider({ children }) {
             signOut();
             setIsAuth(false);
             setUserRole(null);
+            setUser(null);
             return { success: true };
         } catch (error) {
             return { success: false, error: error.message };
@@ -171,6 +185,7 @@ export function AuthProvider({ children }) {
                 isAuth,
                 loading,
                 userRole,
+                user,
                 signIn: handleSignIn,
                 signUp,
                 signOut: handleSignOut,
