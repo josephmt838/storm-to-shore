@@ -12,7 +12,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaBars, FaSignOutAlt } from 'react-icons/fa';
-import { PiHandsPrayingFill } from 'react-icons/pi';
 
 const navItems = [
     { label: 'Home', href: '/' },
@@ -47,12 +46,9 @@ export function MobileMenu() {
                     side='right'
                     className='w-[300px] sm:w-[400px]'
                 >
-                    <SheetTitle className='sr-only'>
-                        Navigation Menu
-                    </SheetTitle>
+                    <SheetTitle className='sr-only'>Navigation Menu</SheetTitle>
                     <SheetDescription className='sr-only'>
-                        Mobile navigation menu for Storm to Shore
-                        website
+                        Mobile navigation menu for Storm to Shore website
                     </SheetDescription>
                     <div className='flex flex-col space-y-4 mt-8'>
                         {navItems.map((item) => (
@@ -102,22 +98,30 @@ export function MobileMenu() {
                                     onClick={handleSignOut}
                                     className='text-base font-medium px-3 py-2 rounded-md text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors text-left flex items-center'
                                 >
-                                    <FaSignOutAlt className="mr-2 h-4 w-4" />
+                                    <FaSignOutAlt className='mr-2 h-4 w-4' />
                                     Logout
                                 </button>
                             </>
                         )}
                         {!isAuth && (
-                            <Link
-                                href='/login'
-                                className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
-                            >
-                                Login
-                            </Link>
+                            <>
+                                <Link
+                                    href='/login'
+                                    className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    href='/register'
+                                    className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
+                                >
+                                    Register
+                                </Link>
+                            </>
                         )}
                     </div>
                 </SheetContent>
             </Sheet>
         </div>
     );
-} 
+}

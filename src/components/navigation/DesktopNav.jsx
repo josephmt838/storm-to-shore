@@ -23,7 +23,7 @@ export function DesktopNav() {
 
     return (
         <div className='hidden md:block'>
-            <div className='ml-10 flex justify-center items-center  space-x-8'>
+            <div className='ml-5 flex justify-center items-center  space-x-2'>
                 {navItems.map((item) => (
                     <Link
                         key={item.href}
@@ -49,9 +49,14 @@ export function DesktopNav() {
                     </>
                 )}
                 {!isAuth && (
-                    <Link href='/login'>
-                        <Button variant='ghost'>Login</Button>
-                    </Link>
+                    <>
+                        <Link href='/login'>
+                            <Button variant='ghost'>Login</Button>
+                        </Link>
+                        <Link href='/register'>
+                            <Button variant='ghost'>Register</Button>
+                        </Link>
+                    </>
                 )}
             </div>
         </div>
