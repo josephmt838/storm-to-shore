@@ -9,10 +9,10 @@ import { UserMenu } from './UserMenu';
 
 const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Prayer Wall', href: '/prayer-wall' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Media', href: '/media' },
+    { label: 'About', href: '/about/' },
+    { label: 'Prayer Wall', href: '/prayer-wall/' },
+    { label: 'Contact', href: '/contact/' },
+    { label: 'Media', href: '/media/' },
 ];
 
 export function DesktopNav() {
