@@ -2,6 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { LoadingIcon } from '@/components/ui/loading-icon';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
@@ -101,24 +102,6 @@ export default function PrayerWall() {
         prayMutation.mutate(prayer.id);
     };
 
-    if (isLoading) {
-        return (
-            <div className='min-h-screen bg-navy-50 py-12 px-4'>
-                <div className='max-w-4xl mx-auto'>
-                    <div className='text-center mb-8'>
-                        <FaUsers className='w-12 h-12 mx-auto text-ocean-500 mb-4 animate-pulse' />
-                        <h1 className='text-4xl font-bold text-navy-700 mb-4'>
-                            Prayer Wall
-                        </h1>
-                        <p className='text-lg text-navy-600'>
-                            Loading prayer requests...
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className='min-h-screen bg-navy-50 py-12 px-4'>
             <div className='max-w-4xl mx-auto'>
@@ -133,77 +116,87 @@ export default function PrayerWall() {
                         their needs with our church family.
                     </p>
                 </div>
-
-                {prayers.length === 0 ? (
-                    <Card className='border-2 border-navy-200 text-center py-12'>
-                        <CardContent>
-                            <FaHeart className='w-16 h-16 mx-auto text-navy-300 mb-4' />
-                            <h3 className='text-xl font-semibold text-navy-600 mb-2'>
-                                No Public Prayer Requests Yet
-                            </h3>
-                            <p className='text-navy-500'>
-                                Be the first to share a public prayer request
-                                with our community.
-                            </p>
-                        </CardContent>
-                    </Card>
+                {isLoading ? (
+                    <div className='w-full flex justify-center'>
+                        <LoadingIcon size='xl' />
+                    </div>
                 ) : (
-                    <div className='space-y-6'>
-                        {prayers.map((prayer) => (
-                            <Card
-                                key={prayer.id}
-                                className='border-2 border-navy-200 hover:border-ocean-400 transition-colors shadow-md'
-                            >
-                                <CardHeader className='bg-gradient-to-r from-ocean-50 to-navy-50'>
-                                    <div className='flex items-start justify-between'>
-                                        <div className='flex-1'>
-                                            <CardTitle className='text-navy-700 text-xl mb-2'>
-                                                {prayer.title ||
-                                                    'Prayer Request'}
-                                            </CardTitle>
-                                            <div className='flex items-center gap-4 text-sm text-navy-600'>
-                                                <span className='flex items-center gap-2'>
-                                                    <IoPerson className='w-6 h-6 text-ocean-500' />
-                                                    {prayer.name || 'Anonymous'}
-                                                </span>
-                                                <span className='flex items-center gap-2'>
-                                                    <FaCalendar className='w-6 h-6 text-ocean-500' />
-                                                    {new Date(
-                                                        prayer.date,
-                                                    ).toLocaleDateString()}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <Badge className='bg-ocean-100 text-ocean-700 border-ocean-200'>
-                                            Praying
-                                        </Badge>
-                                    </div>
-                                </CardHeader>
-                                <CardContent className='pb-6'>
-                                    <p className='text-navy-600 leading-relaxed whitespace-pre-wrap mb-2'>
-                                        {prayer.text}
+                    <>
+                        {prayers.length === 0 ? (
+                            <Card className='border-2 border-navy-200 text-center py-12'>
+                                <CardContent>
+                                    <FaHeart className='w-16 h-16 mx-auto text-navy-300 mb-4' />
+                                    <h3 className='text-xl font-semibold text-navy-600 mb-2'>
+                                        No Public Prayer Requests Yet
+                                    </h3>
+                                    <p className='text-navy-500'>
+                                        Be the first to share a public prayer
+                                        request with our community.
                                     </p>
-                                    <button
-                                        onClick={() =>
-                                            handlePrayerCount(prayer)
-                                        }
-                                        disabled={prayedPrayers.some(
-                                            (p) => p.id === prayer.id,
-                                        )}
-                                        className={`text-sm flex gap-2 items-center ${
-                                            prayedPrayers.some(
-                                                (p) => p.id === prayer.id,
-                                            )
-                                                ? 'text-navy-400 cursor-not-allowed'
-                                                : 'text-ocean-700 hover:text-ocean-900 cursor-pointer'
-                                        }`}
-                                    >
-                                        <PiHandsPraying /> {prayer.count || 0}
-                                    </button>
                                 </CardContent>
                             </Card>
-                        ))}
-                    </div>
+                        ) : (
+                            <div className='space-y-6'>
+                                {prayers.map((prayer) => (
+                                    <Card
+                                        key={prayer.id}
+                                        className='border-2 border-navy-200 hover:border-ocean-400 transition-colors shadow-md'
+                                    >
+                                        <CardHeader className='bg-gradient-to-r from-ocean-50 to-navy-50'>
+                                            <div className='flex items-start justify-between'>
+                                                <div className='flex-1'>
+                                                    <CardTitle className='text-navy-700 text-xl mb-2'>
+                                                        {prayer.title ||
+                                                            'Prayer Request'}
+                                                    </CardTitle>
+                                                    <div className='flex items-center gap-4 text-sm text-navy-600'>
+                                                        <span className='flex items-center gap-2'>
+                                                            <IoPerson className='w-6 h-6 text-ocean-500' />
+                                                            {prayer.name ||
+                                                                'Anonymous'}
+                                                        </span>
+                                                        <span className='flex items-center gap-2'>
+                                                            <FaCalendar className='w-6 h-6 text-ocean-500' />
+                                                            {new Date(
+                                                                prayer.date,
+                                                            ).toLocaleDateString()}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <Badge className='bg-ocean-100 text-ocean-700 border-ocean-200'>
+                                                    Praying
+                                                </Badge>
+                                            </div>
+                                        </CardHeader>
+                                        <CardContent className='pb-6'>
+                                            <p className='text-navy-600 leading-relaxed whitespace-pre-wrap mb-2'>
+                                                {prayer.text}
+                                            </p>
+                                            <button
+                                                onClick={() =>
+                                                    handlePrayerCount(prayer)
+                                                }
+                                                disabled={prayedPrayers.some(
+                                                    (p) => p.id === prayer.id,
+                                                )}
+                                                className={`text-sm flex gap-2 items-center ${
+                                                    prayedPrayers.some(
+                                                        (p) =>
+                                                            p.id === prayer.id,
+                                                    )
+                                                        ? 'text-navy-400 cursor-not-allowed'
+                                                        : 'text-ocean-700 hover:text-ocean-900 cursor-pointer'
+                                                }`}
+                                            >
+                                                <PiHandsPraying />{' '}
+                                                {prayer.count || 0}
+                                            </button>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
+                    </>
                 )}
 
                 <div className='mt-12 text-center'>

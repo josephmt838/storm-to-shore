@@ -2,29 +2,16 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FaCheck } from 'react-icons/fa';
-import { IoMail, IoMailOpen } from 'react-icons/io5';
+import { IoMailOpen } from 'react-icons/io5';
+import NoResultsMessage from './NoResultsMessage';
 
 export function ContactMessagesTab({
     contacts,
     handleRespondMessage,
     respondeMessageMutation,
 }) {
-    if (contacts.length === 0) {
-        return (
-            <Card className='border-2 border-navy-200 text-center py-12'>
-                <CardContent>
-                    <IoMail className='w-16 h-16 mx-auto text-navy-300 mb-4' />
-                    <h3 className='text-xl font-semibold text-navy-600 mb-2'>
-                        No Contact Messages
-                    </h3>
-                    <p className='text-navy-500'>
-                        Contact messages from your discipleship website will
-                        appear here.
-                    </p>
-                </CardContent>
-            </Card>
-        );
-    }
+    if (contacts.length === 0)
+        return <NoResultsMessage selectedFilter={'CONTACT'} />;
 
     return (
         <div className='space-y-6'>

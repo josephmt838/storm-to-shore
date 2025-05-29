@@ -6,11 +6,11 @@ import { ContactMessagesTab } from '@/components/admin/ContactMessagesTab';
 import { PrayerRequestsTab } from '@/components/admin/PrayerRequestsTab';
 import { StatsCards } from '@/components/admin/StatsCards';
 import { TabNavigation } from '@/components/admin/TabNavigation';
+import { LoadingIcon } from '@/components/ui/loading-icon';
 import { useToast } from '@/hooks/use-toast.jsx';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { FaShieldAlt } from 'react-icons/fa';
 
 export default function Admin() {
     const { toast } = useToast();
@@ -109,7 +109,6 @@ export default function Admin() {
             });
         },
         onError: (error) => {
-            console.log(error);
             toast({
                 title: 'Error',
                 description:
@@ -127,54 +126,48 @@ export default function Admin() {
         respondeMessageMutation.mutate({ id });
     };
 
-    if (prayersLoading || contactsLoading) {
-        return (
-            <div className='min-h-screen bg-navy-50 py-12 px-4'>
-                <div className='max-w-6xl mx-auto'>
-                    <div className='text-center'>
-                        <FaShieldAlt className='w-12 h-12 mx-auto text-ocean-500 mb-4 animate-pulse' />
-                        <h1 className='text-4xl font-bold text-navy-700 mb-4'>
-                            Admin Dashboard
-                        </h1>
-                        <p className='text-lg text-navy-600'>
-                            Loading discipleship data...
-                        </p>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <AdminProtectedRoute>
             <div className='min-h-screen bg-navy-50 py-12 px-4'>
                 <div className='max-w-6xl mx-auto'>
-                    <AdminHeader />
-                    <StatsCards
-                        prayers={prayers}
-                        contacts={
-                            contacts?.messages ? contacts.messages : contacts
-                        }
-                    />
-                    <TabNavigation
-                        selectedTab={selectedTab}
-                        setSelectedTab={handleTabChange}
-                    />
+                    <AdminHeader pulse={prayersLoading || contactsLoading} />
+                    {prayersLoading || contactsLoading ? (
+                        <div className='flex items-center justify-center w-full h-[300px]'>
+                            <LoadingIcon size='xl' />
+                        </div>
+                    ) : (
+                        <>
+                            <StatsCards
+                                prayers={prayers}
+                                contacts={
+                                    contacts?.messages
+                                        ? contacts.messages
+                                        : contacts
+                                }
+                            />
+                            <TabNavigation
+                                selectedTab={selectedTab}
+                                setSelectedTab={handleTabChange}
+                            />
 
-                    {selectedTab === 'prayers' && (
-                        <PrayerRequestsTab
-                            prayers={prayers}
-                            handleStatusUpdate={handleStatusUpdate}
-                            updateStatusMutation={updateStatusMutation}
-                        />
-                    )}
+                            {selectedTab === 'prayers' && (
+                                <PrayerRequestsTab
+                                    prayers={prayers}
+                                    handleStatusUpdate={handleStatusUpdate}
+                                    updateStatusMutation={updateStatusMutation}
+                                />
+                            )}
 
-                    {selectedTab === 'contacts' && (
-                        <ContactMessagesTab
-                            contacts={contacts?.messages || contacts}
-                            respondeMessageMutation={respondeMessageMutation}
-                            handleRespondMessage={handleRespondMessage}
-                        />
+                            {selectedTab === 'contacts' && (
+                                <ContactMessagesTab
+                                    contacts={contacts?.messages || contacts}
+                                    respondeMessageMutation={
+                                        respondeMessageMutation
+                                    }
+                                    handleRespondMessage={handleRespondMessage}
+                                />
+                            )}
+                        </>
                     )}
                 </div>
             </div>

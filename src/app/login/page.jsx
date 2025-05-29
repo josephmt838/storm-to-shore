@@ -54,7 +54,7 @@ export default function Login() {
             }
 
             if (result.success) {
-                router.push('/');
+                router.push('/prayer-wall');
             } else {
                 toast({
                     title: 'Login Failed',

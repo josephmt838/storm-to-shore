@@ -1,6 +1,7 @@
 'use client';
 
 import MediaCTA from '@/components/media/MediaCTA';
+import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaAnchor, FaBookOpen, FaHeart, FaUsers } from 'react-icons/fa';
@@ -14,6 +15,7 @@ import {
 
 export default function HomePage() {
     const router = useRouter();
+    const { user } = useAuth();
     return (
         <div className='min-h-screen'>
             {/* Hero Section */}
@@ -32,12 +34,12 @@ export default function HomePage() {
                         encouragement, and biblical truth.
                     </p>
                     <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-                        <Link href='/register'>
+                        <Link href={user ? '/prayer-submit' : '/register'}>
                             <Button
                                 size='lg'
                                 className='bg-ocean-500 hover:bg-ocean-600 text-white px-8 py-3 text-lg'
                             >
-                                Join Us
+                                {user ? 'Submit Prayer Request' : 'Join Us'}
                             </Button>
                         </Link>
                         <Link href='/prayer-wall'>
@@ -154,12 +156,12 @@ export default function HomePage() {
                         faith.
                     </p>
                     <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-                        <Link href='/prayer-submit'>
+                        <Link href={user ? '/prayer-submit' : '/register'}>
                             <Button
                                 size='lg'
                                 className='border-white bg-ocean-500 hover:bg-ocean-600 text-white px-8 py-3 text-lg'
                             >
-                                Share Your Prayer Request
+                                {user ? 'Submit Prayer Request' : 'Join Us'}
                             </Button>
                         </Link>
                         <Link href='/contact'>

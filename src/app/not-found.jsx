@@ -1,5 +1,6 @@
 'use client';
 
+import { LoadingIcon } from '@/components/ui/loading-icon';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -59,8 +60,7 @@ export default function NotFound() {
     return (
         <div className='min-h-screen bg-navy-50 flex items-center justify-center'>
             <div className='text-center'>
-                <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-ocean-500 mx-auto'></div>
-                <p className='mt-4 text-navy-700'>Loading...</p>
+                <LoadingIcon size='xl' />
             </div>
         </div>
     );

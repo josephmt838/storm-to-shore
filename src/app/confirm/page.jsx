@@ -11,6 +11,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { LoadingIcon } from '@/components/ui/loading-icon';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast.jsx';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -168,8 +169,7 @@ export default function Confirm() {
             fallback={
                 <div className='min-h-screen bg-navy-50 flex items-center justify-center'>
                     <div className='text-center'>
-                        <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-ocean-500 mx-auto'></div>
-                        <p className='mt-4 text-navy-700'>Loading...</p>
+                        <LoadingIcon size='xl' />
                     </div>
                 </div>
             }
