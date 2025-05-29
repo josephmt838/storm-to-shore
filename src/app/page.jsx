@@ -1,5 +1,6 @@
 'use client';
 
+import MediaCTA from '@/components/media/MediaCTA';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaAnchor, FaBookOpen, FaHeart, FaUsers } from 'react-icons/fa';
@@ -31,12 +32,12 @@ export default function HomePage() {
                         encouragement, and biblical truth.
                     </p>
                     <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-                        <Link href='/prayer-submit'>
+                        <Link href='/register'>
                             <Button
                                 size='lg'
                                 className='bg-ocean-500 hover:bg-ocean-600 text-white px-8 py-3 text-lg'
                             >
-                                Submit Prayer Request
+                                Join Us
                             </Button>
                         </Link>
                         <Link href='/prayer-wall'>
@@ -125,6 +126,8 @@ export default function HomePage() {
                     </div>
                 </div>
             </section>
+
+            <MediaCTA />
 
             {/* Scripture Section */}
             <section className='py-20 px-4 bg-navy-50'>
