@@ -26,6 +26,7 @@ export function MobileMenu() {
     };
 
     const isActive = (path) => pathname === path;
+    const closeMenu = () => setOpen(false);
 
     return (
         <div className='flex items-center md:hidden'>
@@ -54,7 +55,7 @@ export function MobileMenu() {
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                onClick={() => setOpen(false)}
+                                onClick={closeMenu}
                                 className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                     isActive(item.href)
                                         ? 'text-ocean-600 bg-ocean-50'
@@ -68,7 +69,7 @@ export function MobileMenu() {
                             <>
                                 <Link
                                     href='/profile'
-                                    onClick={() => setOpen(false)}
+                                    onClick={closeMenu}
                                     className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                         isActive('/profile')
                                             ? 'text-ocean-600 bg-ocean-50'
@@ -80,7 +81,7 @@ export function MobileMenu() {
                                 {userRole === 'admin' && (
                                     <Link
                                         href='/admin'
-                                        onClick={() => setOpen(false)}
+                                        onClick={closeMenu}
                                         className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                             isActive('/admin')
                                                 ? 'text-ocean-600 bg-ocean-50'
@@ -92,7 +93,7 @@ export function MobileMenu() {
                                 )}
                                 <Link
                                     href='/prayer-submit'
-                                    onClick={() => setOpen(false)}
+                                    onClick={closeMenu}
                                     className='text-base font-medium px-3 py-2 rounded-md bg-ocean-500 text-white hover:bg-ocean-600 transition-colors'
                                 >
                                     Submit Prayer
@@ -110,14 +111,14 @@ export function MobileMenu() {
                             <>
                                 <Link
                                     href='/login'
-                                    onClick={() => setOpen(false)}
+                                    onClick={closeMenu}
                                     className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
                                 >
                                     Login
                                 </Link>
                                 <Link
                                     href='/register'
-                                    onClick={() => setOpen(false)}
+                                    onClick={closeMenu}
                                     className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
                                 >
                                     Register
