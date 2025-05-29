@@ -2,18 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
+import { navItems } from '@/lib/constants';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { PiHandsPrayingFill } from 'react-icons/pi';
 import { UserMenu } from './UserMenu';
-
-const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about/' },
-    { label: 'Prayer Wall', href: '/prayer-wall/' },
-    { label: 'Contact', href: '/contact/' },
-    { label: 'Media', href: '/media/' },
-];
 
 export function DesktopNav() {
     const pathname = usePathname();

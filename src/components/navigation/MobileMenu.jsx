@@ -9,31 +9,30 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet';
 import { useAuth } from '@/contexts/AuthContext';
+import { navItems } from '@/lib/constants';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import { FaBars, FaSignOutAlt } from 'react-icons/fa';
-
-const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Prayer Wall', href: '/prayer-wall' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Media', href: '/media' },
-];
 
 export function MobileMenu() {
     const pathname = usePathname();
     const { isAuth, signOut, userRole } = useAuth();
+    const [open, setOpen] = useState(false);
 
     const handleSignOut = async () => {
         await signOut();
+        setOpen(false);
     };
 
     const isActive = (path) => pathname === path;
 
     return (
         <div className='flex items-center md:hidden'>
-            <Sheet>
+            <Sheet
+                open={open}
+                onOpenChange={setOpen}
+            >
                 <SheetTrigger asChild>
                     <Button
                         variant='ghost'
@@ -55,6 +54,7 @@ export function MobileMenu() {
                             <Link
                                 key={item.href}
                                 href={item.href}
+                                onClick={() => setOpen(false)}
                                 className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                     isActive(item.href)
                                         ? 'text-ocean-600 bg-ocean-50'
@@ -68,6 +68,7 @@ export function MobileMenu() {
                             <>
                                 <Link
                                     href='/profile'
+                                    onClick={() => setOpen(false)}
                                     className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                         isActive('/profile')
                                             ? 'text-ocean-600 bg-ocean-50'
@@ -79,6 +80,7 @@ export function MobileMenu() {
                                 {userRole === 'admin' && (
                                     <Link
                                         href='/admin'
+                                        onClick={() => setOpen(false)}
                                         className={`text-base font-medium px-3 py-2 rounded-md transition-colors ${
                                             isActive('/admin')
                                                 ? 'text-ocean-600 bg-ocean-50'
@@ -90,6 +92,7 @@ export function MobileMenu() {
                                 )}
                                 <Link
                                     href='/prayer-submit'
+                                    onClick={() => setOpen(false)}
                                     className='text-base font-medium px-3 py-2 rounded-md bg-ocean-500 text-white hover:bg-ocean-600 transition-colors'
                                 >
                                     Submit Prayer
@@ -107,12 +110,14 @@ export function MobileMenu() {
                             <>
                                 <Link
                                     href='/login'
+                                    onClick={() => setOpen(false)}
                                     className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
                                 >
                                     Login
                                 </Link>
                                 <Link
                                     href='/register'
+                                    onClick={() => setOpen(false)}
                                     className='text-base font-medium px-3 py-2 rounded-md text-navy-600 hover:text-ocean-600 hover:bg-navy-50 transition-colors'
                                 >
                                     Register
