@@ -6,8 +6,22 @@ export const PENDING = 'PENDING';
 
 export const navItems = [
     { label: 'Home', href: '/' },
-    { label: 'About', href: '/about/' },
     { label: 'Prayer Wall', href: '/prayer-wall/' },
-    { label: 'Contact', href: '/contact/' },
-    { label: 'Media', href: '/media/' },
+];
+
+export const navItemDropdowns = [
+    {
+        label: 'Media',
+        dropdown: [
+            { label: 'Media', href: '/media/' },
+            { label: 'Articles', href: '/articles/' },
+        ],
+    },
+    {
+        label: 'Us',
+        dropdown: [
+            { label: 'About', href: '/about/' },
+            { label: 'Contact', href: '/contact/' },
+        ],
+    },
 ];
