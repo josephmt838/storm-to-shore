@@ -27,7 +27,10 @@ export default function Articles() {
             <div className='max-w-6xl mx-auto'>
                 <MediaHeader
                     title='Articles & Resources'
-                    description='Explore written studies, devotionals, and helpful tools for your faith journey.'
+                    description='Explore written studies, devotionals, and helpful tools for your faith journey. Our articles provide in-depth biblical insights and practical resources to help you grow in your walk with Christ.'
+                    icon={
+                        <FaBookOpen className='w-10 sm:w-12 h-10 sm:h-12 mx-auto text-ocean-500 mb-4' />
+                    }
                 />
 
                 {/* Featured Articles */}
