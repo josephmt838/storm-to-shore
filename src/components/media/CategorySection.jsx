@@ -1,27 +1,40 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { FaFileAlt, FaMusic, FaVideo } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaFileAlt, FaVideo, FaYoutube } from 'react-icons/fa';
 
 export default function CategorySection() {
     const categories = [
         {
+            icon: (
+                <FaYoutube className='w-12 h-12 mx-auto text-ocean-500 mb-2' />
+            ),
+            title: 'Live Bible Readings',
+            description:
+                'Join our live sessions on YouTube to read, reflect, and grow through God’s Word.',
+            buttonText: 'Watch Live',
+            link: 'https://www.youtube.com/@StormToShoreDiscipleship',
+            tab: true,
+        },
+        {
             icon: <FaVideo className='w-12 h-12 mx-auto text-ocean-500 mb-2' />,
-            title: 'Sermons & Messages',
-            description: 'Biblical teachings and inspiring messages for spiritual growth.',
-            buttonText: 'Browse Sermons'
+            title: 'Video Teachings',
+            description:
+                'Watch biblical teachings, testimonies, and discipleship videos on our YouTube channel.',
+            buttonText: 'Browse Videos',
+            link: 'https://www.youtube.com/@StormToShoreDiscipleship',
+            tab: true,
         },
         {
-            icon: <FaMusic className='w-12 h-12 mx-auto text-ocean-500 mb-2' />,
-            title: 'Worship & Devotionals',
-            description: 'Peaceful worship music and daily devotional content.',
-            buttonText: 'Browse Worship'
-        },
-        {
-            icon: <FaFileAlt className='w-12 h-12 mx-auto text-ocean-500 mb-2' />,
+            icon: (
+                <FaFileAlt className='w-12 h-12 mx-auto text-ocean-500 mb-2' />
+            ),
             title: 'Articles & Resources',
-            description: 'Written resources and biblical insights for deeper study.',
-            buttonText: 'Browse Articles'
-        }
+            description:
+                'Explore written studies, devotionals, and helpful tools for your faith journey.',
+            buttonText: 'Read Articles',
+            link: '/articles',
+        },
     ];
 
     return (
@@ -31,7 +44,10 @@ export default function CategorySection() {
             </h2>
             <div className='grid md:grid-cols-3 gap-6'>
                 {categories.map((category, index) => (
-                    <Card key={index} className='border-2 border-navy-200 hover:border-ocean-400 transition-colors text-center'>
+                    <Card
+                        key={index}
+                        className='border-2 border-navy-200 hover:border-ocean-400 transition-colors text-center flex flex-col justify-evenly'
+                    >
                         <CardHeader>
                             {category.icon}
                             <CardTitle className='text-navy-700'>
@@ -39,19 +55,25 @@ export default function CategorySection() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <p className='text-navy-600 mb-4'>
+                            <p className='text-navy-600'>
                                 {category.description}
                             </p>
+                        </CardContent>
+                        <Link
+                            href={category.link}
+                            alt={category.title}
+                            target={category.tab ? '_blank' : ''}
+                        >
                             <Button
                                 variant='outline'
-                                className='border-ocean-500 text-ocean-600'
+                                className='border-ocean-500 text-ocean-600 mx-4 my-2'
                             >
                                 {category.buttonText}
                             </Button>
-                        </CardContent>
+                        </Link>
                     </Card>
                 ))}
             </div>
         </section>
     );
-} 
+}
