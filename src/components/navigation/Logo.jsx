@@ -17,9 +17,9 @@ export function Logo() {
                     />
                 </div>
                 <span className='text-xl font-semibold text-navy-900'>
-                    PREVIEW ONLY
+                    Storm To Shore
                 </span>
             </div>
         </Link>
     );
-} 
+}

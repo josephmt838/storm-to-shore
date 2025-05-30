@@ -1,6 +1,7 @@
 'use client';
 
 import MediaCTA from '@/components/media/MediaCTA';
+import Banner from '@/components/ui/Banner';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -18,6 +19,12 @@ export default function HomePage() {
     const { user } = useAuth();
     return (
         <div className='min-h-screen'>
+            <Banner>
+                <section className='w-full flex flex-col items-center justify-center gap-2'>
+                    <p>Media & Articles Pages are demo only</p>
+                    <p>Prayer Wall and Login is LIVE</p>
+                </section>
+            </Banner>
             {/* Hero Section */}
             <section className='relative overflow-hidden bg-gradient-to-br from-navy-700 via-navy-600 to-ocean-600 text-white py-20 px-4'>
                 <div className='absolute inset-0 bg-black/20'></div>
