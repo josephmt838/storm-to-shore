@@ -20,17 +20,7 @@ const fairplay = Playfair({
 });
 
 export default function RootLayout({ children }) {
-    const [queryClient] = useState(
-        () =>
-            new QueryClient({
-                defaultOptions: {
-                    queries: {
-                        staleTime: 5 * 60 * 1000, // 5 minutes
-                        retry: 1,
-                    },
-                },
-            }),
-    );
+    const [queryClient] = useState(() => new QueryClient());
 
     return (
         <html
@@ -38,6 +28,11 @@ export default function RootLayout({ children }) {
             className={`${merriweather.className} ${fairplay.variable}`}
         >
             <head>
+                <link
+                    rel='icon'
+                    href='/favicon.svg'
+                    type='image/svg+xml'
+                />
                 <title>Storm to Shore</title>
                 <meta
                     name='description'
