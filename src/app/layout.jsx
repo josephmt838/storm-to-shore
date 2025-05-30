@@ -51,6 +51,7 @@ export default function RootLayout({ children }) {
             <body>
                 <QueryClientProvider client={queryClient}>
                     <AuthProvider>
+                        <div id='banner-root'></div>
                         <div className='min-h-screen bg-navy-50 flex flex-col'>
                             <Navigation />
                             <main className='flex-1'>{children}</main>
