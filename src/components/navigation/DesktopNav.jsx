@@ -72,18 +72,8 @@ export function DesktopNav() {
                         </div>
                     </div>
                 ))}
-                {isAuth && (
-                    <>
-                        <Link href='/prayer-submit'>
-                            <Button className='bg-ocean-500 hover:bg-ocean-600 text-white hidden lg:block'>
-                                Submit Prayer
-                            </Button>
-                            <PiHandsPrayingFill className='lg:hidden block' />
-                        </Link>
-                        <UserMenu />
-                    </>
-                )}
-                {!isAuth && (
+
+                {!isAuth ? (
                     <>
                         <Link href='/login'>
                             <Button
@@ -98,6 +88,16 @@ export function DesktopNav() {
                                 Register
                             </Button>
                         </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link href='/prayer-submit'>
+                            <Button className='bg-ocean-500 hover:bg-ocean-600 text-white hidden lg:block'>
+                                Submit Prayer
+                            </Button>
+                            <PiHandsPrayingFill className='lg:hidden block' />
+                        </Link>
+                        <UserMenu />
                     </>
                 )}
             </div>

@@ -3,95 +3,100 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 210 11% 98%; /* #F5F7FA */
-    --foreground: 215 25% 27%; /* #3E5C76 */
-    --card: 0 0% 100%; /* #FFFFFF */
-    --card-foreground: 215 25% 27%; /* #3E5C76 */
-    --popover: 0 0% 100%; /* #FFFFFF */
-    --popover-foreground: 215 25% 27%; /* #3E5C76 */
-    --primary: 214 84% 56%; /* #1E7FB8 */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF */
-    --secondary: 210 17% 98%; /* #F1F5F9 */
-    --secondary-foreground: 215 25% 27%; /* #3E5C76 */
-    --muted: 210 17% 95%; /* #E2E8F0 */
-    --muted-foreground: 215 13% 65%; /* #64748B */
-    --accent: 214 84% 56%; /* #1E7FB8 */
-    --accent-foreground: 0 0% 100%; /* #FFFFFF */
-    --destructive: 0 72% 51%; /* #DC2626 */
-    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
-    --border: 210 17% 89%; /* #CBD5E1 */
-    --input: 210 17% 89%; /* #CBD5E1 */
-    --ring: 214 84% 56%; /* #1E7FB8 */
-    --radius: 0.5rem;
-    
-    /* Navy theme colors */
-    --navy-50: 210 11% 98%; /* #F5F7FA */
-    --navy-100: 210 17% 95%; /* #E2E8F0 */
-    --navy-200: 214 32% 91%; /* #CBD5E1 */
-    --navy-300: 212 38% 23%; /* #1E293B */
-    --navy-600: 215 25% 27%; /* #3E5C76 */
-    --navy-700: 215 28% 17%; /* #1E293B */
-    --navy-900: 224 71% 4%; /* #0F172A */
-    
-    /* Ocean blues */
-    --ocean-400: 199 89% 48%; /* #0EA5E9 */
-    --ocean-500: 200 98% 39%; /* #0284C7 */
-    --ocean-600: 214 84% 56%; /* #1E7FB8 */
-  }
+    :root {
+        --background: 210 11% 98%; /* #F5F7FA */
+        --foreground: 215 25% 27%; /* #3E5C76 */
+        --card: 0 0% 100%; /* #FFFFFF */
+        --card-foreground: 215 25% 27%; /* #3E5C76 */
+        --popover: 0 0% 100%; /* #FFFFFF */
+        --popover-foreground: 215 25% 27%; /* #3E5C76 */
+        --primary: 214 84% 56%; /* #1E7FB8 */
+        --primary-foreground: 0 0% 100%; /* #FFFFFF */
+        --secondary: 210 17% 98%; /* #F1F5F9 */
+        --secondary-foreground: 215 25% 27%; /* #3E5C76 */
+        --muted: 210 17% 95%; /* #E2E8F0 */
+        --muted-foreground: 215 13% 65%; /* #64748B */
+        --accent: 214 84% 56%; /* #1E7FB8 */
+        --accent-foreground: 0 0% 100%; /* #FFFFFF */
+        --destructive: 0 72% 51%; /* #DC2626 */
+        --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+        --border: 210 17% 89%; /* #CBD5E1 */
+        --input: 210 17% 89%; /* #CBD5E1 */
+        --ring: 214 84% 56%; /* #1E7FB8 */
+        --radius: 0.5rem;
 
-  .dark {
-    --background: 224 71% 4%; /* #0F172A */
-    --foreground: 210 17% 98%; /* #F1F5F9 */
-    --card: 215 28% 17%; /* #1E293B */
-    --card-foreground: 210 17% 98%; /* #F1F5F9 */
-    --popover: 215 28% 17%; /* #1E293B */
-    --popover-foreground: 210 17% 98%; /* #F1F5F9 */
-    --primary: 214 84% 56%; /* #1E7FB8 */
-    --primary-foreground: 0 0% 100%; /* #FFFFFF */
-    --secondary: 215 25% 27%; /* #3E5C76 */
-    --secondary-foreground: 210 17% 98%; /* #F1F5F9 */
-    --muted: 215 25% 27%; /* #3E5C76 */
-    --muted-foreground: 210 17% 89%; /* #CBD5E1 */
-    --accent: 214 84% 56%; /* #1E7FB8 */
-    --accent-foreground: 0 0% 100%; /* #FFFFFF */
-    --destructive: 0 72% 51%; /* #DC2626 */
-    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
-    --border: 215 25% 27%; /* #3E5C76 */
-    --input: 215 25% 27%; /* #3E5C76 */
-    --ring: 214 84% 56%; /* #1E7FB8 */
-  }
+        /* Navy theme colors */
+        --navy-50: 210 11% 98%; /* #F5F7FA */
+        --navy-100: 210 17% 95%; /* #E2E8F0 */
+        --navy-200: 214 32% 91%; /* #CBD5E1 */
+        --navy-300: 212 38% 23%; /* #1E293B */
+        --navy-600: 215 25% 27%; /* #3E5C76 */
+        --navy-700: 215 28% 17%; /* #1E293B */
+        --navy-900: 224 71% 4%; /* #0F172A */
+
+        /* Ocean blues */
+        --ocean-400: 199 89% 48%; /* #0EA5E9 */
+        --ocean-500: 200 98% 39%; /* #0284C7 */
+        --ocean-600: 214 84% 56%; /* #1E7FB8 */
+    }
+
+    .dark {
+        --background: 224 71% 4%; /* #0F172A */
+        --foreground: 210 17% 98%; /* #F1F5F9 */
+        --card: 215 28% 17%; /* #1E293B */
+        --card-foreground: 210 17% 98%; /* #F1F5F9 */
+        --popover: 215 28% 17%; /* #1E293B */
+        --popover-foreground: 210 17% 98%; /* #F1F5F9 */
+        --primary: 214 84% 56%; /* #1E7FB8 */
+        --primary-foreground: 0 0% 100%; /* #FFFFFF */
+        --secondary: 215 25% 27%; /* #3E5C76 */
+        --secondary-foreground: 210 17% 98%; /* #F1F5F9 */
+        --muted: 215 25% 27%; /* #3E5C76 */
+        --muted-foreground: 210 17% 89%; /* #CBD5E1 */
+        --accent: 214 84% 56%; /* #1E7FB8 */
+        --accent-foreground: 0 0% 100%; /* #FFFFFF */
+        --destructive: 0 72% 51%; /* #DC2626 */
+        --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+        --border: 215 25% 27%; /* #3E5C76 */
+        --input: 215 25% 27%; /* #3E5C76 */
+        --ring: 214 84% 56%; /* #1E7FB8 */
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }
 
 /* Ocean wave animation */
 @keyframes wave {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .wave-animation {
-  animation: wave 3s ease-in-out infinite;
+    animation: wave 3s ease-in-out infinite;
 }
 
 /* Custom ocean gradients */
 .ocean-gradient {
-  background: linear-gradient(135deg, #0EA5E9 0%, #1E7FB8 50%, #0284C7 100%);
+    background: linear-gradient(135deg, #0ea5e9 0%, #1e7fb8 50%, #0284c7 100%);
 }
 
 .navy-gradient {
-  background: linear-gradient(135deg, #1E293B 0%, #3E5C76 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #3e5c76 100%);
 }
 
 /* Smooth scrolling */
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }

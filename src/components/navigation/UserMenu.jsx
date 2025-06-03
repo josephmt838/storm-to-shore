@@ -10,8 +10,9 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { FaCog, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { IoPersonSharp } from 'react-icons/io5';
+import UserAdminMenu from './UserAdminMenu';
 
 export function UserMenu() {
     const pathname = usePathname();
@@ -43,17 +44,7 @@ export function UserMenu() {
                         Profile
                     </Link>
                 </DropdownMenuItem>
-                {userRole === 'admin' && (
-                    <DropdownMenuItem asChild>
-                        <Link
-                            href='/admin'
-                            className='flex items-center'
-                        >
-                            <FaCog className='mr-2 h-4 w-4' />
-                            Admin
-                        </Link>
-                    </DropdownMenuItem>
-                )}
+                {userRole === 'admin' && <UserAdminMenu />}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     onClick={handleSignOut}
