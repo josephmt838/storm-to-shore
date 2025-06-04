@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Link from 'next/link';
 import { FaCalendar, FaClock, FaPlay } from 'react-icons/fa';
 import { getMediaIcon, getTypeColor } from './utils';
 
@@ -46,9 +47,22 @@ export default function MediaCard({ item, isFeatured = false }) {
                     <p className='text-navy-600 mb-4 leading-relaxed'>
                         {item.description}
                     </p>
-                    <Button className='w-full bg-ocean-500 hover:bg-ocean-600 text-white'>
-                        <FaPlay className='w-4 h-4 mr-2' />
-                        {item.type === 'article' ? 'Read Article' : 'Play Now'}
+                    <Button
+                        className='w-full bg-ocean-500 hover:bg-ocean-600 text-white'
+                        asChild
+                    >
+                        <Link
+                            href={
+                                item.type === 'article'
+                                    ? `/articles/${item.id}`
+                                    : `/media/${item.id}`
+                            }
+                        >
+                            <FaPlay className='w-4 h-4 mr-2' />
+                            {item.type === 'article'
+                                ? 'Read Article'
+                                : 'Play Now'}
+                        </Link>
                     </Button>
                 </CardContent>
             </Card>
@@ -100,9 +114,18 @@ export default function MediaCard({ item, isFeatured = false }) {
                             <Button
                                 variant='outline'
                                 className='border-ocean-500 text-ocean-600 hover:bg-ocean-50 w-full sm:w-auto'
+                                asChild
                             >
-                                <FaPlay className='w-4 h-4 mr-2' />
-                                {item.type === 'article' ? 'Read' : 'Play'}
+                                <Link
+                                    href={
+                                        item.type === 'article'
+                                            ? `/articles/${item.id}`
+                                            : `/media/${item.id}`
+                                    }
+                                >
+                                    <FaPlay className='w-4 h-4 mr-2' />
+                                    {item.type === 'article' ? 'Read' : 'Play'}
+                                </Link>
                             </Button>
                         </div>
                     </div>
