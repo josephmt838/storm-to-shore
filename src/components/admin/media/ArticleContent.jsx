@@ -3,14 +3,13 @@
 import { getTypeColor } from '@/components/media/utils';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { LoadingIcon } from '@/components/ui/loading-icon';
+import { Skeleton } from '@/components/ui/skeleton';
 import { apiRequest } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
 import { FaCalendar, FaClock } from 'react-icons/fa';
 import ReactMarkdown from 'react-markdown';
 
 export default function ArticleContent({ id }) {
-    // Fetch single article
     const { data: article, isLoading } = useQuery({
         queryKey: [`/articles/${id}`],
         queryFn: async () => {
@@ -21,13 +20,9 @@ export default function ArticleContent({ id }) {
 
     if (isLoading) {
         return (
-            <div className='min-h-screen bg-navy-50 py-12 px-4'>
-                <div className='max-w-4xl mx-auto'>
-                    <div className='w-full flex justify-center'>
-                        <LoadingIcon size='xl' />
-                    </div>
-                </div>
-            </div>
+            <Skeleton
+                className={'m-auto my-10 w-[90%] max-w-4xl min-h-[600px]'}
+            />
         );
     }
 

@@ -21,7 +21,7 @@ export default function Articles() {
     const regularArticles = articles.filter((item) => !item.featured);
 
     return (
-        <div className='min-h-screen bg-navy-50 py-12 px-4'>
+        <div className='bg-navy-50 py-12 px-4'>
             <div className='max-w-6xl mx-auto'>
                 <MediaHeader
                     title='Articles & Resources'

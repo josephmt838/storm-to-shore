@@ -2,7 +2,7 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { LoadingIcon } from '@/components/ui/loading-icon';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
@@ -117,9 +117,11 @@ export default function PrayerWall() {
                     </p>
                 </div>
                 {isLoading ? (
-                    <div className='w-full flex justify-center'>
-                        <LoadingIcon size='xl' />
-                    </div>
+                    <>
+                        <Skeleton className='w-full min-h-[180px] mb-4' />
+                        <Skeleton className='w-full min-h-[180px] mb-4' />
+                        <Skeleton className='w-full min-h-[180px] mb-4' />
+                    </>
                 ) : (
                     <>
                         {prayers.length === 0 ? (
