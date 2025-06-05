@@ -4,22 +4,34 @@ import CategorySection from '@/components/media/CategorySection';
 import MediaCard from '@/components/media/MediaCard';
 import MediaCTA from '@/components/media/MediaCTA';
 import MediaHeader from '@/components/media/MediaHeader';
-import Banner from '@/components/ui/Banner';
-import { mediaContent } from '@/data/media';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
+import { useQuery } from '@tanstack/react-query';
 import { FaBookOpen, FaPlay, FaVideo } from 'react-icons/fa';
 
 export default function Media() {
-    const featuredContent = mediaContent.filter((item) => item.featured);
-    const regularContent = mediaContent.filter((item) => !item.featured);
+    const { toast } = useToast();
+    const { data: media = [], isLoading } = useQuery({
+        queryKey: ['/media'],
+        queryFn: async () => {
+            const response = await apiRequest('GET', 'media');
+
+            return response.json();
+        },
+        onError: (error) => {
+            toast({
+                title: 'Error',
+                description: 'Failed to fetch media items. Please try again.',
+                variant: 'destructive',
+            });
+        },
+    });
+    const featuredContent = media.filter((item) => item.featured);
+    const regularContent = media.filter((item) => !item.featured);
 
     return (
         <>
-            <Banner>
-                <section className='w-full flex items-center justify-center gap-2'>
-                    <p className='font-bold'>DEMO</p>
-                    <p>Real content as soon as possible</p>
-                </section>
-            </Banner>
             <div className='bg-navy-50 py-12 px-4'>
                 <div className='max-w-6xl mx-auto'>
                     <MediaHeader
@@ -31,24 +43,26 @@ export default function Media() {
                     />
 
                     {/* Featured Content */}
-                    {featuredContent.length > 0 && (
-                        <section className='mb-12'>
-                            <h2 className='text-2xl font-bold text-navy-700 mb-6 flex items-center gap-2'>
-                                <FaBookOpen className='w-6 h-6 text-ocean-500' />
-                                Featured Content
-                            </h2>
-                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                                {featuredContent.map((item) => (
+                    <section className='mb-12'>
+                        <h2 className='text-2xl font-bold text-navy-700 mb-6 flex items-center gap-2'>
+                            <FaBookOpen className='w-6 h-6 text-ocean-500' />
+                            Featured Content
+                        </h2>
+                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                            {isLoading ? (
+                                <Skeleton className={'w-full min-h-[200px]'} />
+                            ) : (
+                                featuredContent.map((item) => (
                                     <MediaCard
                                         key={item.id}
                                         item={item}
                                         isFeatured={true}
                                         type='media'
                                     />
-                                ))}
-                            </div>
-                        </section>
-                    )}
+                                ))
+                            )}
+                        </div>
+                    </section>
 
                     {/* All Content */}
                     <section>
@@ -57,13 +71,17 @@ export default function Media() {
                             All Media Content
                         </h2>
                         <div className='grid gap-6'>
-                            {regularContent.map((item) => (
-                                <MediaCard
-                                    key={item.id}
-                                    item={item}
-                                    type='media'
-                                />
-                            ))}
+                            {isLoading ? (
+                                <Skeleton className={'w-full min-h-[200px]'} />
+                            ) : (
+                                regularContent.map((item) => (
+                                    <MediaCard
+                                        key={item.id}
+                                        item={item}
+                                        type='media'
+                                    />
+                                ))
+                            )}
                         </div>
                     </section>
 

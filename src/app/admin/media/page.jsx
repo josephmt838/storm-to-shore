@@ -4,7 +4,7 @@ import MediaCard from '@/components/admin/media/MediaCard';
 import MediaForm from '@/components/admin/media/MediaForm';
 import NoMedia from '@/components/admin/media/NoMedia';
 import { AdminProtectedRoute } from '@/components/AdminProtectedRoute';
-import { LoadingIcon } from '@/components/ui/loading-icon';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
@@ -38,9 +38,7 @@ const Media = () => {
 
                 <div className='h-[500px] content-center'>
                     {isLoading ? (
-                        <div className='w-full flex justify-center'>
-                            <LoadingIcon size='xl' />
-                        </div>
+                        <Skeleton className='w-full min-h-[300px] flex justify-center items-center' />
                     ) : mediaItems.length === 0 ? (
                         <NoMedia />
                     ) : (

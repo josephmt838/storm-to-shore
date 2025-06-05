@@ -10,6 +10,7 @@ export default function MediaCard({
     isFeatured = false,
     type = 'article',
 }) {
+    console.log(item.thumbnail);
     if (isFeatured) {
         return (
             <Card className='border-2 border-ocean-200 hover:border-ocean-400 transition-colors shadow-lg'>
@@ -44,8 +45,16 @@ export default function MediaCard({
                 </CardHeader>
                 <CardContent className='p-6'>
                     {item.thumbnail && (
-                        <div className='w-full h-40 bg-navy-100 rounded-lg mb-4 flex items-center justify-center'>
-                            <FaPlay className='w-12 h-12 text-navy-400' />
+                        <div
+                            className='w-full h-40 bg-navy-100 rounded-lg mb-4 flex items-center justify-center relative'
+                            style={{
+                                backgroundImage: `url(${item.thumbnail})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}
+                        >
+                            <div className='absolute inset-0 bg-black/30 rounded-lg' />
+                            <FaPlay className='w-12 h-12 text-white relative z-10' />
                         </div>
                     )}
                     <p className='text-navy-600 mb-4 leading-relaxed'>
@@ -59,7 +68,7 @@ export default function MediaCard({
                             href={
                                 type === 'article'
                                     ? `/articles/${item.id}`
-                                    : `/media/${item.id}`
+                                    : item.link
                             }
                         >
                             <FaPlay className='w-4 h-4 mr-2' />
@@ -122,7 +131,7 @@ export default function MediaCard({
                                     href={
                                         type === 'article'
                                             ? `/articles/${item.id}`
-                                            : `/media/${item.id}`
+                                            : item.link
                                     }
                                 >
                                     <FaPlay className='w-4 h-4 mr-2' />

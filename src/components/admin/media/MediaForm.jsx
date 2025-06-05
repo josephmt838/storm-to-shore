@@ -29,12 +29,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa';
 
 const MediaForm = ({ media, onSuccess }) => {
     const { toast } = useToast();
     const queryClient = useQueryClient();
+    const [open, setOpen] = useState(false);
     const form = useForm({
         defaultValues: media || {
             title: '',
@@ -63,6 +65,7 @@ const MediaForm = ({ media, onSuccess }) => {
                 variant: 'success',
             });
             form.reset();
+            setOpen(false);
             onSuccess?.();
         },
         onError: (error) => {
@@ -88,6 +91,7 @@ const MediaForm = ({ media, onSuccess }) => {
                 variant: 'success',
             });
             form.reset();
+            setOpen(false);
             onSuccess?.();
         },
         onError: (error) => {
@@ -108,14 +112,17 @@ const MediaForm = ({ media, onSuccess }) => {
     };
 
     return (
-        <Dialog>
+        <Dialog
+            open={open}
+            onOpenChange={setOpen}
+        >
             <DialogTrigger asChild>
                 <Button>
                     <FaPlus className='mr-2' />
                     {media ? 'Edit Media' : 'New Media'}
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='max-h-[90vh] overflow-y-auto'>
                 <DialogHeader>
                     <DialogTitle>
                         {media ? 'Edit Media' : 'New Media'}
@@ -186,9 +193,33 @@ const MediaForm = ({ media, onSuccess }) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Category</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Select category' />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value='Sermon'>
+                                                Sermon
+                                            </SelectItem>
+                                            <SelectItem value='Devotional'>
+                                                Devotional
+                                            </SelectItem>
+                                            <SelectItem value='Testimony'>
+                                                Testimony
+                                            </SelectItem>
+                                            <SelectItem value='Worship'>
+                                                Worship
+                                            </SelectItem>
+                                            <SelectItem value='Teaching'>
+                                                Teaching
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
