@@ -18,12 +18,26 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa';
+
+// Dynamically import the markdown editor to avoid SSR issues
+const MDEditor = dynamic(
+    () => import('@uiw/react-md-editor').then((mod) => mod.default),
+    { ssr: false },
+);
 
 const ArticleForm = ({ article, onSuccess }) => {
     const { toast } = useToast();
@@ -105,7 +119,7 @@ const ArticleForm = ({ article, onSuccess }) => {
                     {article ? 'Edit Article' : 'New Article'}
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='max-h-[90vh] overflow-y-auto'>
                 <DialogHeader>
                     <DialogTitle>
                         {article ? 'Edit Article' : 'New Article'}
@@ -149,10 +163,14 @@ const ArticleForm = ({ article, onSuccess }) => {
                                 <FormItem>
                                     <FormLabel>Content</FormLabel>
                                     <FormControl>
-                                        <Textarea
-                                            {...field}
-                                            className='min-h-[200px]'
-                                        />
+                                        <div data-color-mode='light'>
+                                            <MDEditor
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                preview='edit'
+                                                height={400}
+                                            />
+                                        </div>
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -164,9 +182,30 @@ const ArticleForm = ({ article, onSuccess }) => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Category</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder='Select a category' />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value='Teaching'>
+                                                Teaching
+                                            </SelectItem>
+                                            <SelectItem value='Devotional'>
+                                                Devotional
+                                            </SelectItem>
+                                            <SelectItem value='Resource'>
+                                                Resource
+                                            </SelectItem>
+                                            <SelectItem value='Article'>
+                                                Article
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}

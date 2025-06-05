@@ -4,18 +4,22 @@ import MediaCard from '@/components/media/MediaCard';
 import MediaCTA from '@/components/media/MediaCTA';
 import MediaHeader from '@/components/media/MediaHeader';
 import Banner from '@/components/ui/Banner';
-import { mediaContent } from '@/data/media';
+import { apiRequest } from '@/lib/queryClient';
+import { useQuery } from '@tanstack/react-query';
 import { FaBookOpen, FaFileAlt } from 'react-icons/fa';
 
 export default function Articles() {
-    // Filter content to only show articles and resources
-    const articlesContent = mediaContent.filter(
-        (item) => item.type === 'article' || item.type === 'resource',
-    );
+    const { data: articles = [], isLoading } = useQuery({
+        queryKey: ['/articles'],
+        queryFn: async () => {
+            const response = await apiRequest('GET', 'articles');
+            return response.json();
+        },
+    });
 
-    const featuredArticles = articlesContent.filter((item) => item.featured);
-    const regularArticles = articlesContent.filter((item) => !item.featured);
-
+    const featuredArticles = articles.filter((item) => item.featured);
+    const regularArticles = articles.filter((item) => !item.featured);
+    console.log(featuredArticles, regularArticles);
     return (
         <div className='min-h-screen bg-navy-50 py-12 px-4'>
             <Banner>
@@ -46,6 +50,7 @@ export default function Articles() {
                                     key={item.id}
                                     item={item}
                                     isFeatured={true}
+                                    type='article'
                                 />
                             ))}
                         </div>
@@ -63,6 +68,7 @@ export default function Articles() {
                             <MediaCard
                                 key={item.id}
                                 item={item}
+                                type='article'
                             />
                         ))}
                     </div>

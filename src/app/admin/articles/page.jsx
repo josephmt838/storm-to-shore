@@ -17,7 +17,6 @@ const Articles = () => {
             return response.json();
         },
     });
-
     return (
         <AdminProtectedRoute>
             <div className='container mx-auto py-8 min-h-[700px]'>

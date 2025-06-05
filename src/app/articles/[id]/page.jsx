@@ -1,16 +1,20 @@
-import { mediaContent } from '@/data/media';
-import ArticleContent from '../../../components/admin/media/ArticleContent';
+import ArticleContent from '@/components/admin/media/ArticleContent';
 
 // Generate static paths for all articles
 export async function generateStaticParams() {
-    // Filter for articles only
-    const articles = mediaContent.filter(
-        (item) => item.type === 'article' || item.type === 'resource',
-    );
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_API_URL}/articles`,
+        );
+        const articles = await response.json();
 
-    return articles.map((article) => ({
-        id: article.id.toString(),
-    }));
+        return articles.map((article) => ({
+            id: article.id,
+        }));
+    } catch (error) {
+        console.error('Error generating static params:', error);
+        return [];
+    }
 }
 
 export default async function ArticlePage({ params }) {

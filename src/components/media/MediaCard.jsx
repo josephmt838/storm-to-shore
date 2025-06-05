@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { FaCalendar, FaClock, FaPlay } from 'react-icons/fa';
 import { getMediaIcon, getTypeColor } from './utils';
 
-export default function MediaCard({ item, isFeatured = false }) {
+export default function MediaCard({
+    item,
+    isFeatured = false,
+    type = 'article',
+}) {
     if (isFeatured) {
         return (
             <Card className='border-2 border-ocean-200 hover:border-ocean-400 transition-colors shadow-lg'>
@@ -13,7 +17,7 @@ export default function MediaCard({ item, isFeatured = false }) {
                     <div className='flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3'>
                         <div className='flex-1'>
                             <CardTitle className='text-lg sm:text-xl mb-2 flex items-center gap-2 leading-tight font-bold'>
-                                {getMediaIcon(item.type)}
+                                {getMediaIcon(type)}
                                 <span className='break-words'>
                                     {item.title}
                                 </span>
@@ -31,7 +35,7 @@ export default function MediaCard({ item, isFeatured = false }) {
                         </div>
                         <Badge
                             className={`border-white self-start font-semibold ${getTypeColor(
-                                item.type,
+                                type,
                             )}`}
                         >
                             {item.category}
@@ -53,15 +57,13 @@ export default function MediaCard({ item, isFeatured = false }) {
                     >
                         <Link
                             href={
-                                item.type === 'article'
+                                type === 'article'
                                     ? `/articles/${item.id}`
                                     : `/media/${item.id}`
                             }
                         >
                             <FaPlay className='w-4 h-4 mr-2' />
-                            {item.type === 'article'
-                                ? 'Read Article'
-                                : 'Play Now'}
+                            {type === 'article' ? 'Read Article' : 'Play Now'}
                         </Link>
                     </Button>
                 </CardContent>
@@ -75,7 +77,7 @@ export default function MediaCard({ item, isFeatured = false }) {
                 <div className='flex flex-col sm:flex-row items-start gap-4'>
                     <div className='flex-shrink-0 w-full sm:w-auto'>
                         <div className='w-full sm:w-20 h-20 bg-gradient-to-br from-ocean-500 to-navy-600 rounded-lg flex items-center justify-center text-white'>
-                            {getMediaIcon(item.type)}
+                            {getMediaIcon(type)}
                         </div>
                     </div>
                     <div className='flex-1 min-w-0 w-full'>
@@ -85,10 +87,10 @@ export default function MediaCard({ item, isFeatured = false }) {
                             </h3>
                             <Badge
                                 className={`${getTypeColor(
-                                    item.type,
+                                    type,
                                 )} flex-shrink-0`}
                             >
-                                {item.type}
+                                {type}
                             </Badge>
                         </div>
                         <p className='text-navy-600 mb-4 leading-relaxed text-sm sm:text-base'>
@@ -118,13 +120,13 @@ export default function MediaCard({ item, isFeatured = false }) {
                             >
                                 <Link
                                     href={
-                                        item.type === 'article'
+                                        type === 'article'
                                             ? `/articles/${item.id}`
                                             : `/media/${item.id}`
                                     }
                                 >
                                     <FaPlay className='w-4 h-4 mr-2' />
-                                    {item.type === 'article' ? 'Read' : 'Play'}
+                                    {type === 'article' ? 'Read' : 'Play'}
                                 </Link>
                             </Button>
                         </div>

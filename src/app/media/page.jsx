@@ -43,6 +43,7 @@ export default function Media() {
                                         key={item.id}
                                         item={item}
                                         isFeatured={true}
+                                        type='media'
                                     />
                                 ))}
                             </div>
@@ -60,6 +61,7 @@ export default function Media() {
                                 <MediaCard
                                     key={item.id}
                                     item={item}
+                                    type='media'
                                 />
                             ))}
                         </div>
