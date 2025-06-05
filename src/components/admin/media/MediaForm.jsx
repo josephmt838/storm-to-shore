@@ -44,6 +44,7 @@ const MediaForm = ({ media, onSuccess }) => {
             duration: '',
             featured: false,
             thumbnail: '',
+            link: '',
             date: new Date().toISOString().split('T')[0],
         },
     });
@@ -234,6 +235,22 @@ const MediaForm = ({ media, onSuccess }) => {
                                         <Input
                                             {...field}
                                             placeholder='e.g., /api/placeholder/400/225'
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name='link'
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Media Link</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            {...field}
+                                            placeholder='e.g., https://youtube.com/watch?v=...'
                                         />
                                     </FormControl>
                                     <FormMessage />

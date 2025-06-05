@@ -7,6 +7,7 @@ import { LoadingIcon } from '@/components/ui/loading-icon';
 import { apiRequest } from '@/lib/queryClient';
 import { useQuery } from '@tanstack/react-query';
 import { FaCalendar, FaClock } from 'react-icons/fa';
+import ReactMarkdown from 'react-markdown';
 
 export default function ArticleContent({ id }) {
     // Fetch single article
@@ -79,11 +80,7 @@ export default function ArticleContent({ id }) {
                         </div>
 
                         <div className='prose prose-navy max-w-none'>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: article.content,
-                                }}
-                            />
+                            <ReactMarkdown>{article.content}</ReactMarkdown>
                         </div>
                     </CardContent>
                 </Card>

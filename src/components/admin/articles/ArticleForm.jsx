@@ -30,18 +30,25 @@ import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPlus } from 'react-icons/fa';
 
 // Dynamically import the markdown editor to avoid SSR issues
 const MDEditor = dynamic(
     () => import('@uiw/react-md-editor').then((mod) => mod.default),
-    { ssr: false },
+    {
+        ssr: false,
+        loading: () => (
+            <div className='h-[400px] w-full bg-gray-100 animate-pulse rounded-md' />
+        ),
+    },
 );
 
 const ArticleForm = ({ article, onSuccess }) => {
     const { toast } = useToast();
     const queryClient = useQueryClient();
+    const [open, setOpen] = useState(false);
     const form = useForm({
         defaultValues: article || {
             title: '',
@@ -67,6 +74,7 @@ const ArticleForm = ({ article, onSuccess }) => {
                 variant: 'success',
             });
             form.reset();
+            setOpen(false);
             onSuccess?.();
         },
         onError: (error) => {
@@ -92,6 +100,7 @@ const ArticleForm = ({ article, onSuccess }) => {
                 variant: 'success',
             });
             form.reset();
+            setOpen(false);
             onSuccess?.();
         },
         onError: (error) => {
@@ -112,14 +121,17 @@ const ArticleForm = ({ article, onSuccess }) => {
     };
 
     return (
-        <Dialog>
+        <Dialog
+            open={open}
+            onOpenChange={setOpen}
+        >
             <DialogTrigger asChild>
                 <Button>
                     <FaPlus className='mr-2' />
                     {article ? 'Edit Article' : 'New Article'}
                 </Button>
             </DialogTrigger>
-            <DialogContent className='max-h-[90vh] overflow-y-auto'>
+            <DialogContent className='max-h-[90vh] lg:min-w-[900px] overflow-y-auto'>
                 <DialogHeader>
                     <DialogTitle>
                         {article ? 'Edit Article' : 'New Article'}
@@ -163,12 +175,18 @@ const ArticleForm = ({ article, onSuccess }) => {
                                 <FormItem>
                                     <FormLabel>Content</FormLabel>
                                     <FormControl>
-                                        <div data-color-mode='light'>
+                                        <div
+                                            data-color-mode='light'
+                                            className='w-full'
+                                        >
                                             <MDEditor
                                                 value={field.value}
                                                 onChange={field.onChange}
                                                 preview='edit'
                                                 height={400}
+                                                className='w-full'
+                                                hideToolbar={false}
+                                                enableScroll={true}
                                             />
                                         </div>
                                     </FormControl>

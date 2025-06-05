@@ -20,7 +20,7 @@ export default function Media() {
                     <p>Real content as soon as possible</p>
                 </section>
             </Banner>
-            <div className='min-h-screen bg-navy-50 py-12 px-4'>
+            <div className='bg-navy-50 py-12 px-4'>
                 <div className='max-w-6xl mx-auto'>
                     <MediaHeader
                         title='Media Library'
